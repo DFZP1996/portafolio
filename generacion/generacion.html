@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generación sin vaper | Portafolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CONEXIÓN EXCLUSIVA CON ADOBE FONTS (Tu Web Project) -->
+    <link rel="stylesheet" href="https://use.typekit.net/ubs0zra.css">
+
+    <style>
+        /* =======================================================
+           CONFIGURACIÓN TIPOGRÁFICA GLOBAL (Vía Adobe Fonts)
+           ======================================================= */
+        body {
+            background-color: #f8fafc;
+            color: #000033;
+            /* BC Civitas para Párrafos */
+            font-family: 'bc-civitas', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Proteste Riot para Titulares Principales */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .font-riot {
+            font-family: 'protest-riot', 'proteste-riot', 'Impact', sans-serif;
+            text-transform: uppercase;
+            font-weight: normal;
+            letter-spacing: 0.05em;
+        }
+
+        /* Protest Revolution para frases llamativas y decoración */
+        .font-revo {
+            font-family: 'protest-revolution', cursive;
+            letter-spacing: 0.02em;
+            text-transform: none;
+        }
+
+        /* =======================================================
+           FONDOS VIBRANTES NEÓN (Generación Sin Vaper)
+           ======================================================= */
+        .bg-dots-pattern {
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 35px 35px;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            z-index: -1;
+            pointer-events: none;
+            animation: float 18s infinite ease-in-out alternate;
+        }
+
+        /* Magenta Neón */
+        .blob-1 {
+            background-color: rgba(240, 66, 255, 0.25);
+            width: 70vw;
+            height: 70vw;
+            max-width: 800px;
+            max-height: 800px;
+            top: -10%;
+            right: -20%;
+        }
+
+        /* Cian Vibrante */
+        .blob-2 {
+            background-color: rgba(183, 245, 245, 0.7);
+            width: 60vw;
+            height: 60vw;
+            max-width: 700px;
+            max-height: 700px;
+            top: 40%;
+            left: -20%;
+            animation-delay: -5s;
+            animation-direction: alternate-reverse;
+        }
+
+        /* Púrpura */
+        .blob-3 {
+            background-color: rgba(102, 51, 255, 0.25);
+            width: 50vw;
+            height: 50vw;
+            max-width: 600px;
+            max-height: 600px;
+            bottom: 0%;
+            right: 10%;
+            animation-delay: -2s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(-40px, 40px) scale(1.05) rotate(5deg);
+            }
+
+            100% {
+                transform: translate(40px, -40px) scale(0.95) rotate(-5deg);
+            }
+        }
+
+        .blend-multiply {
+            mix-blend-mode: multiply;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 51, 0.1);
+        }
+
+        /* =======================================================
+           ANIMACIONES AL SCROLLEAR Y HOVER
+           ======================================================= */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
+        }
+
+        .reveal-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 {
+            transition-delay: 100ms;
+        }
+
+        .delay-200 {
+            transition-delay: 200ms;
+        }
+
+        .delay-300 {
+            transition-delay: 300ms;
+        }
+
+        .delay-400 {
+            transition-delay: 400ms;
+        }
+
+        .hover-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .hover-card:hover {
+            transform: translateY(-12px) scale(1.02) !important;
+            box-shadow: 0 30px 60px -15px rgba(102, 51, 255, 0.25);
+            border-color: rgba(240, 66, 255, 0.5);
+        }
+
+        .glass-card.hover-card:hover {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        /* =======================================================
+           OOH: AFICHES EN BARAJA DE PARES (Frente y Reverso)
+           ======================================================= */
+        .pair-deck-wrapper {
+            position: relative;
+            width: 100%;
+            height: 550px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .poster-card {
+            position: absolute;
+            width: 280px;
+            aspect-ratio: 2/3;
+            border-radius: 1rem;
+            border: 4px solid white;
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 51, 0.2);
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: white;
+        }
+
+        /* ESTADOS INICIALES: Frente visible arriba, Reverso escondido atrás */
+        .poster-back {
+            transform: translateX(30px) rotate(8deg) scale(0.95);
+            z-index: 1;
+            filter: brightness(0.8);
+        }
+
+        .poster-front {
+            transform: translateX(-20px) rotate(-4deg);
+            z-index: 2;
+        }
+
+        /* HOVER: Intercambio de posiciones. El de atrás pasa al frente completamente */
+        .pair-deck-wrapper:hover .poster-back {
+            transform: translateX(-20px) rotate(-4deg) scale(1.05) translateY(-10px);
+            z-index: 50;
+            filter: brightness(1);
+            box-shadow: 0 30px 60px rgba(240, 66, 255, 0.3);
+        }
+
+        .pair-deck-wrapper:hover .poster-front {
+            transform: translateX(40px) rotate(10deg) scale(0.95);
+            z-index: 1;
+            filter: brightness(0.7);
+        }
+
+        /* =======================================================
+           OOH: ROLLUPS CON STAND 3D
+           ======================================================= */
+        .rollup-container {
+            position: relative;
+            width: 250px;
+            aspect-ratio: 1/2;
+            margin: 0 auto;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .rollup-canvas {
+            width: 100%;
+            height: 100%;
+            background: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .rollup-base {
+            position: absolute;
+            bottom: -15px;
+            left: -5%;
+            width: 110%;
+            height: 30px;
+            background: linear-gradient(to bottom, #f1f5f9, #94a3b8, #475569);
+            border-radius: 6px;
+            z-index: 3;
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 51, 0.4), inset 0 2px 5px rgba(255, 255, 255, 0.8);
+            border-top: 1px solid #cbd5e1;
+        }
+
+        .rollup-base::before,
+        .rollup-base::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            width: 40px;
+            height: 10px;
+            background: #475569;
+            border-radius: 20px;
+            z-index: -1;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .rollup-base::before {
+            left: 10%;
+            transform: rotate(15deg);
+        }
+
+        .rollup-base::after {
+            right: 10%;
+            transform: rotate(-15deg);
+        }
+
+        .rollup-container:hover {
+            transform: translateY(-15px) scale(1.05);
+        }
+
+        .rollup-container:hover .rollup-canvas {
+            box-shadow: 0 25px 50px rgba(183, 245, 245, 0.4);
+        }
+
+        /* =======================================================
+           OOH: PASACALLES SUSPENDIDOS (Efecto 3D)
+           ======================================================= */
+        .pasacalle-wrapper {
+            perspective: 1500px;
+            width: 100%;
+            padding: 2rem 0;
+        }
+
+        .pasacalle-canvas {
+            width: 100%;
+            aspect-ratio: 4/1;
+            background: white;
+            border-radius: 0.5rem;
+            position: relative;
+            transform: rotateX(8deg) rotateY(-2deg);
+            transform-style: preserve-3d;
+            box-shadow: 0 30px 40px -15px rgba(0, 0, 51, 0.3);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+
+        .pasacalle-canvas::before,
+        .pasacalle-canvas::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            border: 3px solid #94a3b8;
+            border-radius: 50%;
+            background: #e2e8f0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .pasacalle-canvas::before {
+            left: 10px;
+        }
+
+        .pasacalle-canvas::after {
+            right: 10px;
+        }
+
+        .pasacalle-wrapper:hover .pasacalle-canvas {
+            transform: rotateX(0deg) rotateY(0deg) scale(1.03) translateZ(50px);
+            box-shadow: 0 40px 60px -10px rgba(102, 51, 255, 0.3);
+            border-color: rgba(240, 66, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body class="bg-dots-pattern">
+
+    <!-- FONDOS VIBRANTES NEÓN -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- BARRA DE NAVEGACIÓN (En parchate.html y generacion.html) -->
+    <nav class="sticky top-0 z-50 glass-card border-b-0 rounded-b-3xl mx-4 mt-2">
+        <div class="max-w-7xl mx-auto px-6 h-14 flex items-center reveal-element is-visible">
+
+            <!-- AQUÍ ESTÁ EL CAMBIO CLAVE EN EL HREF -->
+            <a href="../index.html#proyectos"
+                class="flex items-center text-[#262668] hover:text-[#EDA240] transition-colors text-sm font-bold">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Volver al Portafolio
+            </a>
+
+        </div>
+    </nav>
+
+    <main class="w-full max-w-7xl mx-auto px-6 py-16 md:py-24">
+
+        <!-- 1. CABECERA Y CONTEXTO -->
+        <header class="mb-32 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start md:items-center">
+            <!-- Columna Izquierda: Logo Principal -->
+            <div class="relative flex flex-col items-center lg:items-start reveal-element">
+                <h1 class="sr-only">Generación sin vaper</h1>
+
+                <div class="relative w-full max-w-[280px] md:max-w-[380px] z-[60]">
+                    <!-- Logo oficial estático -->
+                    <img src="PORTAFOLIO_2026-36.png" alt="Logo Generación sin vaper"
+                        class="w-full h-auto drop-shadow-[0_25px_35px_rgba(102,51,255,0.2)]">
+                </div>
+
+                <span
+                    class="inline-block py-2 px-6 rounded-full bg-[#000033] text-[#B7F5F5] font-riot tracking-widest text-xs mt-10 shadow-xl shadow-[#000033]/20">Identidad
+                    Urbana & OOH</span>
+            </div>
+
+            <!-- Columna Derecha: El Contexto -->
+            <div class="glass-card p-8 md:p-12 rounded-[2.5rem] relative z-10 mt-8 md:mt-0 reveal-element delay-200">
+                <h2
+                    class="text-4xl text-transparent bg-clip-text bg-gradient-to-r from-[#F042FF] to-[#6633FF] mb-5 flex items-center font-riot">
+                    El Reto & Concepto</h2>
+
+                <!-- Todo el párrafo usa BC Civitas, solo el final resalta con Revolution -->
+                <p class="text-slate-800 leading-relaxed text-base md:text-lg">
+                    "Generación sin vaper" nace como un movimiento de identidad colectiva y un grito de independencia.
+                    Es la respuesta de una juventud que elige lo auténtico y lo sano, demostrando que no se necesita
+                    depender de un dispositivo electrónico para encajar o tener actitud. Apropiándose de los códigos
+                    visuales del mundo digital, la estética synthwave y el arte urbano, la campaña rompe con el típico
+                    molde institucional. La paleta neón y la gráfica atrevida proyectan una rebeldía positiva: la
+                    libertad y frescura de ser una generación <span
+                        class="font-revo text-3xl px-1 text-[#6633FF] block mt-4">100% libre de humo.</span>
+                </p>
+            </div>
+        </header>
+
+        <!-- 2. SISTEMA VISUAL & APLICACIÓN DE LOGO -->
+        <section class="mb-32 relative z-10">
+            <div class="flex items-center mb-12 reveal-element">
+                <span class="text-[#F042FF] font-revo text-6xl mr-4 opacity-80 pt-2">01</span>
+                <h2 class="text-5xl text-[#000033] font-revo">Sistema Visual</h2>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-16">
+                <!-- Paleta de Colores Organizada -->
+                <div class="xl:col-span-2 glass-card rounded-[2.5rem] p-8 reveal-element delay-100">
+
+                    <h3 class="text-2xl text-[#000033] font-riot mb-6 border-b-2 border-[#B7F5F5] pb-2 inline-block">
+                        Colores Principales</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                        <!-- Magenta -->
+                        <div
+                            class="rounded-2xl overflow-hidden flex flex-col border border-white bg-white/50 shadow-sm">
+                            <div class="h-24 bg-[#F042FF] w-full"></div>
+                            <div class="p-4 flex-grow">
+                                <h4 class="text-xl mb-3 text-[#000033] font-riot">Magenta Neón</h4>
+                                <div class="space-y-2 text-xs text-slate-700 font-mono font-medium">
+                                    <p class="flex justify-between border-b border-slate-200 pb-1"><span>HEX</span>
+                                        <span class="font-bold text-[#F042FF]">#F042FF</span>
+                                    </p>
+                                    <p class="flex justify-between border-b border-slate-200 pb-1"><span>RGB</span>
+                                        <span>240, 66, 255</span>
+                                    </p>
+                                    <p class="flex justify-between"><span>CMYK</span> <span>42, 71, 0, 0</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Cian -->
+                        <div
+                            class="rounded-2xl overflow-hidden flex flex-col border border-white bg-white/50 shadow-sm">
+                            <div class="h-24 bg-[#B7F5F5] w-full"></div>
+                            <div class="p-4 flex-grow">
+                                <h4 class="text-xl mb-3 text-[#000033] font-riot">Cian Sintético</h4>
+                                <div class="space-y-2 text-xs text-slate-700 font-mono font-medium">
+                                    <p class="flex justify-between border-b border-slate-200 pb-1"><span>HEX</span>
+                                        <span class="font-bold text-[#38bdf8]">#B7F5F5</span>
+                                    </p>
+                                    <p class="flex justify-between border-b border-slate-200 pb-1"><span>RGB</span>
+                                        <span>183, 245, 245</span>
+                                    </p>
+                                    <p class="flex justify-between"><span>CMYK</span> <span>31, 0, 10, 0</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl text-[#000033] font-riot mb-6 border-b-2 border-[#6633FF] pb-2 inline-block">
+                        Colores Secundarios</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Púrpura -->
+                        <div
+                            class="rounded-2xl overflow-hidden flex flex-col border border-white bg-white/50 shadow-sm">
+                            <div class="h-20 bg-[#6633FF] w-full"></div>
+                            <div class="p-4 flex-grow">
+                                <h4 class="text-xl mb-3 text-[#000033] font-riot">Púrpura UV</h4>
+                                <div class="space-y-2 text-xs text-slate-700 font-mono font-medium">
+                                    <p class="flex justify-between border-b border-slate-200 pb-1"><span>HEX</span>
+                                        <span class="font-bold text-[#6633FF]">#6633FF</span>
+                                    </p>
+                                    <p class="flex justify-between border-b border-slate-200 pb-1"><span>RGB</span>
+                                        <span>102, 51, 255</span>
+                                    </p>
+                                    <p class="flex justify-between"><span>CMYK</span> <span>82, 76, 0, 0</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Navy Dark -->
+                        <div
+                            class="rounded-2xl overflow-hidden flex flex-col border border-white bg-white/50 shadow-sm">
+                            <div class="h-20 bg-[#000033] w-full"></div>
+                            <div class="p-4 flex-grow">
+                                <h4 class="text-xl mb-3 text-[#000033] font-riot">Navy Dark</h4>
+                                <div class="space-y-2 text-xs text-slate-700 font-mono font-medium">
+                                    <p class="flex justify-between border-b border-slate-200 pb-1"><span>HEX</span>
+                                        <span class="font-bold text-[#000033]">#000033</span>
+                                    </p>
+                                    <p class="flex justify-between border-b border-slate-200 pb-1"><span>RGB</span>
+                                        <span>0, 0, 51</span>
+                                    </p>
+                                    <p class="flex justify-between"><span>CMYK</span> <span>100, 93, 42, 68</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tipografías de Campaña -->
+                <div
+                    class="glass-card rounded-[2.5rem] p-8 flex flex-col justify-center relative overflow-hidden reveal-element delay-300">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 text-9xl font-riot text-[#000033]">Aa</div>
+
+                    <div class="mb-8 relative z-10">
+                        <p class="text-[10px] text-[#F042FF] font-bold uppercase tracking-widest mb-2 font-sans">
+                            Titulares</p>
+                        <h3 class="text-4xl text-[#000033] font-riot">Proteste Riot</h3>
+                        <p class="text-sm text-slate-500 mt-2 font-riot tracking-widest break-words">ABCDEFGHIJKLMNN
+                            OPQRSTUVWXYZ</p>
+                    </div>
+
+                    <div class="mb-8 relative z-10 border-t border-slate-200 pt-6">
+                        <p class="text-[10px] text-[#6633FF] font-bold uppercase tracking-widest mb-2 font-sans">
+                            Decoración y Llamados</p>
+                        <h3 class="text-4xl text-[#F042FF] font-revo tracking-wide">Protest Revolution</h3>
+                        <p class="text-sm text-slate-500 mt-2 font-revo break-words">La calle es nuestra, el aire
+                            también.</p>
+                    </div>
+
+                    <div class="border-t border-slate-200 pt-6 relative z-10">
+                        <p class="text-[10px] text-[#38bdf8] font-bold uppercase tracking-widest mb-2 font-sans">
+                            Párrafos</p>
+                        <h3 class="text-3xl text-[#000033] font-bold">BC Civitas</h3>
+                        <p class="text-sm text-slate-600 mt-2 leading-relaxed">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn
+                            Oo Pp</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aplicaciones del Logo (Los 3 PNGs) -->
+            <div class="reveal-element delay-200">
+                <h3 class="text-3xl text-[#000033] mb-8 border-l-8 border-[#B7F5F5] pl-6 rounded-l-md font-riot">
+                    Aplicaciones del Logo</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                    <!-- Logo 1 (Fondo Cristal) -->
+                    <div
+                        class="glass-card rounded-[2.5rem] p-8 flex items-center justify-center hover-card aspect-square">
+                        <img src="PORTAFOLIO_2026-36.png" alt="Aplicación Logo 1"
+                            class="w-full h-auto object-contain drop-shadow-xl"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'font-riot text-2xl text-slate-400\'>LOGO PNG 1</span>'">
+                    </div>
+
+                    <!-- Logo 2 (Fondo Gradiente Magenta-Púrpura) -->
+                    <div
+                        class="bg-gradient-to-br from-[#F042FF] to-[#6633FF] border border-white/50 shadow-xl rounded-[2.5rem] p-8 flex items-center justify-center hover-card aspect-square">
+                        <img src="PORTAFOLIO_2026-37.png" alt="Aplicación Logo 2"
+                            class="w-full h-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,51,0.3)]"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'font-riot text-2xl text-white\'>LOGO PNG 2</span>'">
+                    </div>
+
+                    <!-- Logo 3 (Fondo Gradiente Cian-Navy) -->
+                    <div
+                        class="bg-gradient-to-tr from-[#B7F5F5] to-[#000033] border border-white/50 shadow-xl rounded-[2.5rem] p-8 flex items-center justify-center hover-card aspect-square">
+                        <img src="PORTAFOLIO_2026-38.png" alt="Aplicación Logo 3"
+                            class="w-full h-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,51,0.3)]"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'font-riot text-2xl text-white\'>LOGO PNG 3</span>'">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. GALERÍA MATERIAL IMPRESO / OOH -->
+        <section class="mb-20">
+            <div class="reveal-element">
+                <div class="flex items-center mb-6">
+                    <span class="text-[#F042FF] font-revo text-6xl mr-4 opacity-80 pt-2">02</span>
+                    <h2 class="text-5xl text-[#000033] font-revo">Campaña OOH & Gran Formato</h2>
+                </div>
+                <p class="text-slate-800 mb-16 max-w-3xl text-xl">Adaptación del sistema gráfico para material impreso
+                    urbano, priorizando la legibilidad a distancia y el impacto visual mediante formatos dinámicos.</p>
+            </div>
+
+            <!-- CATEGORÍA 1: AFICHES (BARAJA PARES) -->
+            <div class="mb-32">
+                <h3
+                    class="text-3xl text-[#000033] mb-8 border-l-8 border-[#F042FF] pl-6 reveal-element rounded-l-md font-riot">
+                    Afiches Urbanos (800x1200)</h3>
+                <p class="text-slate-600 mb-8 max-w-2xl font-medium reveal-element delay-100">Interacción Frente /
+                    Reverso. Pasa el cursor sobre cada par para descubrir ambas caras de la pieza.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+                    <!-- Par de Afiches 1 -->
+                    <div class="glass-card rounded-[3rem] p-8 reveal-element delay-200">
+                        <h4 class="text-center font-riot text-[#6633FF] text-xl mb-4 tracking-wider">Línea Gráfica A
+                        </h4>
+                        <div class="pair-deck-wrapper">
+                            <!-- El Reverso (29) se esconde atrás en CSS -->
+                            <div class="poster-card poster-back">
+                                <img src="PORTAFOLIO_2026-29.jpg" alt="Afiche 1 Reverso"
+                                    class="w-full h-full object-cover blend-multiply"
+                                    onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-slate-100\'><span class=\'font-riot text-xl text-slate-400\'>AFICHE 1 (REVERSO)</span></div>'">
+                            </div>
+                            <!-- El Frente (28) se muestra adelante -->
+                            <div class="poster-card poster-front">
+                                <img src="PORTAFOLIO_2026-28.jpg" alt="Afiche 1 Frente"
+                                    class="w-full h-full object-cover blend-multiply"
+                                    onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-slate-100\'><span class=\'font-riot text-xl text-slate-400\'>AFICHE 1 (FRENTE)</span></div>'">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Par de Afiches 2 -->
+                    <div class="glass-card rounded-[3rem] p-8 reveal-element delay-300">
+                        <h4 class="text-center font-riot text-[#F042FF] text-xl mb-4 tracking-wider">Línea Gráfica B
+                        </h4>
+                        <div class="pair-deck-wrapper">
+                            <!-- El Reverso (31) -->
+                            <div class="poster-card poster-back">
+                                <img src="PORTAFOLIO_2026-31.jpg" alt="Afiche 2 Reverso"
+                                    class="w-full h-full object-cover blend-multiply"
+                                    onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-slate-100\'><span class=\'font-riot text-xl text-slate-400\'>AFICHE 2 (REVERSO)</span></div>'">
+                            </div>
+                            <!-- El Frente (30) -->
+                            <div class="poster-card poster-front">
+                                <img src="PORTAFOLIO_2026-30.jpg" alt="Afiche 2 Frente"
+                                    class="w-full h-full object-cover blend-multiply"
+                                    onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-slate-100\'><span class=\'font-riot text-xl text-slate-400\'>AFICHE 2 (FRENTE)</span></div>'">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CATEGORÍA 2: ROLLUPS (CON STAND 3D) -->
+            <div class="mb-32">
+                <h3
+                    class="text-3xl text-[#000033] mb-8 border-l-8 border-[#B7F5F5] pl-6 reveal-element rounded-l-md font-riot">
+                    Roll-ups Promocionales (1000x2000)</h3>
+
+                <div class="glass-card rounded-[3rem] p-12 reveal-element delay-100">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-8 justify-items-center pt-8 pb-12">
+
+                        <!-- Rollup 1 -->
+                        <div class="rollup-container w-full max-w-[300px]">
+                            <div class="rollup-canvas">
+                                <img src="PORTAFOLIO_2026-32.jpg" alt="Rollup 1"
+                                    class="w-full h-full object-cover blend-multiply"
+                                    onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-slate-100\'><span class=\'font-riot text-xl text-slate-400\'>ROLLUP 01</span></div>'">
+                            </div>
+                            <div class="rollup-base"></div>
+                        </div>
+
+                        <!-- Rollup 2 -->
+                        <div class="rollup-container w-full max-w-[300px]">
+                            <div class="rollup-canvas">
+                                <img src="PORTAFOLIO_2026-33.jpg" alt="Rollup 2"
+                                    class="w-full h-full object-cover blend-multiply"
+                                    onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-slate-100\'><span class=\'font-riot text-xl text-slate-400\'>ROLLUP 02</span></div>'">
+                            </div>
+                            <div class="rollup-base"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORÍA 3: PASACALLES SUSPENDIDOS -->
+            <div class="mb-12">
+                <h3
+                    class="text-3xl text-[#000033] mb-8 border-l-8 border-[#6633FF] pl-6 reveal-element rounded-l-md font-riot">
+                    Pasacalles (2000x500)</h3>
+                <p class="text-slate-600 mb-8 max-w-2xl font-medium reveal-element delay-100">Simulación 3D interactiva.
+                    Pasa el cursor para ajustar la perspectiva frontal.</p>
+
+                <div class="flex flex-col gap-12">
+                    <!-- Pasacalle 1 -->
+                    <div class="pasacalle-wrapper reveal-element delay-200">
+                        <div
+                            class="pasacalle-canvas flex items-center justify-center overflow-hidden bg-white/50 backdrop-blur-md">
+                            <img src="PORTAFOLIO_2026-34.jpg" alt="Pasacalle 1"
+                                class="w-full h-full object-cover blend-multiply"
+                                onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'font-riot text-3xl text-slate-400\'>PASACALLE 01 (2000x500)</span>'">
+                        </div>
+                    </div>
+
+                    <!-- Pasacalle 2 -->
+                    <div class="pasacalle-wrapper reveal-element delay-300">
+                        <div
+                            class="pasacalle-canvas flex items-center justify-center overflow-hidden bg-white/50 backdrop-blur-md">
+                            <img src="PORTAFOLIO_2026-35.jpg" alt="Pasacalle 2"
+                                class="w-full h-full object-cover blend-multiply"
+                                onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'font-riot text-3xl text-slate-400\'>PASACALLE 02 (2000x500)</span>'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="glass-card border-x-0 border-b-0 rounded-t-3xl mt-20 py-10 reveal-element">
+        <div
+            class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-[#000066] text-sm font-bold">
+            <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                <p>&copy; Daniel F. Zamora Pineda.</p>
+                <p class="text-xs text-[#000066]/70 mt-2 font-medium italic font-sans">Disclaimer: Todo el material
+                    visual es un ejercicio de diseño para portafolio. Nada de esto es una campaña real.</p>
+            </div>
+            <p class="mt-4 md:mt-0 flex items-center">
+                Desarrollado a mano con <span
+                    class="bg-[#F042FF] text-white px-3 py-1 rounded-full mx-2 font-riot tracking-widest">HTML</span> &
+                <span class="bg-[#6633FF] text-white px-3 py-1 rounded-full mx-1 font-riot tracking-widest">CSS</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT PARA ANIMACIONES AL HACER SCROLL -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    } else {
+                        // Comentado para evitar glitches al hacer hover en las tarjetas animadas
+                        // entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, observerOptions);
+
+            const elementsToReveal = document.querySelectorAll('.reveal-element');
+
+            elementsToReveal.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+
+</html>
