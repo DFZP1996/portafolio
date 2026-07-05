@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodle SecSalud | Dashboard & Analítica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CHART.JS PARA LAS GRÁFICAS EN VIVO -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CONEXIÓN CON GOOGLE FONTS (Montserrat para el Proyecto Moodle) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- CONEXIÓN CON ADOBE FONTS (Tus titulares del Portafolio) -->
+    <link rel="stylesheet" href="https://use.typekit.net/ubs0zra.css">
+
+    <style>
+        /* =======================================================
+           CONFIGURACIÓN DEL ENTORNO DEL PORTAFOLIO EXTERNO
+           ======================================================= */
+        body {
+            background-color: #050505;
+            color: #f8fafc;
+            font-family: 'bc-civitas', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-title {
+            font-family: 'articulat-cf', sans-serif;
+            font-weight: 700;
+        }
+
+        .font-moodle {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .glass-dark {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* =======================================================
+           SISTEMA DE DISEÑO (VARIABLES CSS MULTITEMA)
+           ======================================================= */
+        .sys-theme[data-theme="light"] {
+            --bg-color: #f4f7fe;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #4318ff;
+            --success: #05cd99;
+            --warning: #ffb547;
+            --danger: #ee5d50;
+            --info: #0ea5e9;
+            --border-color: #e2e8f0;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .sys-theme[data-theme="dark"] {
+            --bg-color: #0b1437;
+            --card-bg: #111c44;
+            --text-main: #f8fafc;
+            --text-muted: #a3aed1;
+            --primary: #7551ff;
+            --success: #01b574;
+            --warning: #ffb547;
+            --danger: #ee5d50;
+            --info: #38bdf8;
+            --border-color: #1f2937;
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .sys-theme[data-theme="rose"] {
+            --bg-color: #fff1f2;
+            --card-bg: #ffffff;
+            --text-main: #4c0519;
+            --text-muted: #9f1239;
+            --primary: #e11d48;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #be123c;
+            --info: #0ea5e9;
+            --border-color: #fecdd3;
+            --card-shadow: 0 4px 20px rgba(225, 29, 72, 0.08);
+        }
+
+        .sys-theme[data-theme="amber"] {
+            --bg-color: #fffbeb;
+            --card-bg: #ffffff;
+            --text-main: #451a03;
+            --text-muted: #92400e;
+            --primary: #d97706;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --info: #0284c7;
+            --border-color: #fde68a;
+            --card-shadow: 0 4px 20px rgba(217, 119, 6, 0.08);
+        }
+
+        .sys-bg {
+            background-color: var(--bg-color);
+            transition: background-color 0.4s ease;
+        }
+
+        .sys-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+            transition: all 0.4s ease;
+        }
+
+        .sys-text {
+            color: var(--text-main);
+            transition: color 0.4s ease;
+        }
+
+        .sys-text-muted {
+            color: var(--text-muted);
+            transition: color 0.4s ease;
+        }
+
+        .sys-text-primary {
+            color: var(--primary);
+            transition: color 0.4s ease;
+        }
+
+        .sys-border-primary {
+            border-color: var(--primary);
+        }
+
+        /* =======================================================
+           ANIMACIONES Y MOCKUPS DE DISPOSITIVOS RESPONSIVOS
+           ======================================================= */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
+        }
+
+        .reveal-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 {
+            transition-delay: 100ms;
+        }
+
+        .delay-200 {
+            transition-delay: 200ms;
+        }
+
+        /* Mockup Laptop Adaptable */
+        .laptop-mockup {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            border-radius: 0.5rem 0.5rem 0 0;
+            border: 4px solid #1e293b;
+            border-bottom: 12px solid #0f172a;
+            position: relative;
+            background: var(--bg-color);
+            box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.15);
+            overflow: hidden;
+        }
+
+        .laptop-screen {
+            width: 100%;
+            height: auto;
+            /* Permite crecer en móvil naturalmente */
+            min-height: 400px;
+        }
+
+        /* En Desktop, activamos el Scroll Interno */
+        @media (min-width: 1024px) {
+            .laptop-mockup {
+                border-width: 8px;
+                border-bottom-width: 24px;
+                border-radius: 1rem 1rem 0 0;
+                aspect-ratio: 16/10;
+            }
+
+            .laptop-screen {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 100%;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            .laptop-screen::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .laptop-screen::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            .laptop-screen::-webkit-scrollbar-thumb {
+                background-color: rgba(100, 116, 139, 0.5);
+                border-radius: 10px;
+            }
+        }
+
+        /* Mockup Celular */
+        .phone-mockup {
+            width: 100%;
+            max-width: 320px;
+            height: 650px;
+            border: 12px solid #1e293b;
+            border-radius: 2.5rem;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.15), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background-color: #1e293b;
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            z-index: 50;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        .phone-screen::-webkit-scrollbar {
+            display: none;
+        }
+
+        .bg-grid-pattern {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Barras de Calidad Percibida */
+        .progress-bar-bg {
+            background-color: rgba(100, 116, 139, 0.1);
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            background-color: var(--success);
+        }
+
+        /* Estilo Wireframe */
+        .wireframe-box {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 1rem;
+            position: relative;
+        }
+
+        .wireframe-line {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="bg-grid-pattern">
+
+    <!-- NAVEGACIÓN -->
+    <nav class="sticky top-0 z-50 glass-dark border-b-0 rounded-b-3xl mx-4 mt-2 shadow-lg shadow-black/50">
+        <div class="max-w-[1400px] mx-auto px-6 h-14 flex items-center reveal-element is-visible">
+            <a href="../index.html#proyectos"
+                class="flex items-center text-slate-300 hover:text-[#3b82f6] transition-colors text-sm font-bold">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Volver al Portafolio
+            </a>
+        </div>
+    </nav>
+
+    <main class="w-full max-w-[1400px] mx-auto px-6 md:px-12 py-16 md:py-24">
+
+        <!-- ============================================== -->
+        <!-- 1. HERO Y CONTEXTO                             -->
+        <!-- ============================================== -->
+        <header class="mb-40">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-20">
+                <div class="lg:col-span-7 reveal-element">
+                    <div class="flex flex-wrap gap-3 mb-6">
+
+                    </div>
+                    <h1 class="font-title text-5xl md:text-7xl leading-tight text-white mb-6">
+                        Moodle Dashboard <br><span class="text-slate-500 font-light">& IA Adaptativa</span>
+                    </h1>
+                    <p class="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl font-light">
+                        Diseño y validación de un Producto Mínimo Viable (MVP) para la Secretaría de Salud de Cali. Un
+                        viaje desde la estructuración de datos hasta la creación de un sistema de analítica
+                        institucional interactivo.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-5 glass-dark rounded-[2rem] p-8 reveal-element delay-200">
+                    <h3 class="font-title text-2xl text-white mb-6 border-b border-white/10 pb-4">Ficha Técnica</h3>
+                    <ul class="space-y-4">
+                        <li class="flex flex-col"><span
+                                class="text-xs text-slate-500 font-bold uppercase tracking-widest">Cliente</span><span
+                                class="text-slate-200 text-lg font-moodle">Secretaría de Salud</span></li>
+                        <li class="flex flex-col"><span
+                                class="text-xs text-slate-500 font-bold uppercase tracking-widest">Rol del
+                                Proyecto</span><span class="text-slate-200 text-lg font-moodle">Análisis, UI/UX &
+                                Maquetación</span></li>
+                        <li class="flex flex-col"><span
+                                class="text-xs text-slate-500 font-bold uppercase tracking-widest">Validación de
+                                Éxito</span><span class="text-[#05cd99] text-lg font-moodle font-bold">Puntaje SUS > 70
+                                (Alta Usabilidad)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- ============================================== -->
+        <!-- 2. EL RETO Y METODOLOGÍA (DATA SCIENCE)        -->
+        <!-- ============================================== -->
+        <section class="mb-40">
+            <div class="flex items-center mb-12 reveal-element">
+                <span class="text-blue-500 font-title text-5xl mr-4 opacity-40 pt-1">01</span>
+                <h2 class="text-4xl md:text-5xl text-white font-title">El Problema y la Solución</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="glass-dark rounded-[2.5rem] p-10 md:p-12 reveal-element border-t-4 border-red-500">
+                    <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center mb-6"><svg
+                            class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                            </path>
+                        </svg></div>
+                    <h3 class="font-title text-3xl text-white mb-4">El Reto</h3>
+                    <p class="text-slate-400 leading-relaxed font-moodle text-justify">La Secretaría de Salud presentaba
+                        una <strong>alta deserción</strong> en la oferta formativa virtual gratuita. Factores
+                        sociodemográficos y académicos no estaban siendo monitoreados de manera unificada, lo que
+                        impedía prevenir el abandono a tiempo o entender el perfil real de los estudiantes.</p>
+                </div>
+                <div
+                    class="glass-dark rounded-[2.5rem] p-10 md:p-12 reveal-element delay-200 border-t-4 border-emerald-500">
+                    <div class="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center mb-6"><svg
+                            class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg></div>
+                    <h3 class="font-title text-3xl text-white mb-4">El MVP</h3>
+                    <p class="text-slate-400 leading-relaxed font-moodle text-justify">Desarrollamos un Producto Mínimo
+                        Viable con dos frentes: <strong>1. Dashboard Analítico</strong> interactivo para que los
+                        gestores consoliden KPIs y tomen decisiones. <strong>2. Módulo de IA Adaptativa</strong> para
+                        generar recomendaciones automáticas al estudiante según su perfil inicial.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 3. ARQUITECTURA DE DATOS Y WIREFRAMES          -->
+        <!-- ============================================== -->
+        <section class="mb-40">
+            <div class="flex items-center mb-8 reveal-element">
+                <span class="text-blue-500 font-title text-5xl mr-4 opacity-40 pt-1">02</span>
+                <h2 class="text-4xl md:text-5xl text-white font-title">Arquitectura de Datos & Wireframes</h2>
+            </div>
+            <p class="text-slate-400 font-moodle max-w-3xl mb-12 reveal-element">Antes de aplicar color y tipografía, el
+                proceso creativo inició con la estructuración lógica de los datos. Se diseñó un esquema (wireframe)
+                modular, dividiendo la carga cognitiva en bloques de información digeribles para los administradores.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 reveal-element delay-200">
+                <div class="glass-dark rounded-[2.5rem] p-8">
+                    <h3 class="font-title text-xl text-white mb-6">Modelado de Información</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white/5 border border-white/10 rounded-lg p-4 font-mono text-xs text-slate-300">
+                            <span class="text-blue-400 font-bold">1.</span> KPIs Globales (Cursos, Matrículas)
+                        </div>
+                        <div class="bg-white/5 border border-white/10 rounded-lg p-4 font-mono text-xs text-slate-300">
+                            <span class="text-emerald-400 font-bold">2.</span> Variables Demográficas (Sexo, Edad)
+                        </div>
+                        <div class="bg-white/5 border border-white/10 rounded-lg p-4 font-mono text-xs text-slate-300">
+                            <span class="text-orange-400 font-bold">3.</span> Métricas Operativas (Aprobación)
+                        </div>
+                        <div class="bg-white/5 border border-white/10 rounded-lg p-4 font-mono text-xs text-slate-300">
+                            <span class="text-purple-400 font-bold">4.</span> Datos Geográficos (Comunas)
+                        </div>
+                        <div class="bg-white/5 border border-white/10 rounded-lg p-4 font-mono text-xs text-slate-300">
+                            <span class="text-pink-400 font-bold">5.</span> Resultados Encuesta de Satisfacción
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="lg:col-span-2 bg-[#0f172a] border border-slate-700 rounded-[2.5rem] p-8 flex flex-col gap-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="w-32 h-6 wireframe-line"></div>
+                        <div class="w-48 h-8 wireframe-box rounded-full"></div>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-2">
+                        <div class="h-20 wireframe-box"></div>
+                        <div class="h-20 wireframe-box"></div>
+                        <div class="h-20 wireframe-box"></div>
+                        <div class="h-20 wireframe-box"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
+                        <div class="h-32 wireframe-box flex items-center justify-center">
+                            <div class="w-16 h-16 rounded-full border-4 border-dashed border-slate-600"></div>
+                        </div>
+                        <div class="h-32 wireframe-box flex items-center justify-center">
+                            <div class="w-16 h-16 rounded-full border-4 border-dashed border-slate-600"></div>
+                        </div>
+                        <div class="h-32 wireframe-box flex flex-col justify-end p-4 gap-2">
+                            <div class="w-full h-2 wireframe-line"></div>
+                            <div class="w-3/4 h-2 wireframe-line"></div>
+                            <div class="w-1/2 h-2 wireframe-line"></div>
+                        </div>
+                    </div>
+                    <div class="h-40 wireframe-box w-full p-4 flex flex-col gap-3">
+                        <div class="w-full h-4 wireframe-line opacity-50"></div>
+                        <div class="w-full h-4 wireframe-line opacity-30"></div>
+                        <div class="w-full h-4 wireframe-line opacity-30"></div>
+                        <div class="w-full h-4 wireframe-line opacity-30"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 4. SISTEMA MULTITEMA (UX/UI)                   -->
+        <!-- ============================================== -->
+        <section class="mb-40">
+            <div class="flex items-center mb-8 reveal-element">
+                <span class="text-blue-500 font-title text-5xl mr-4 opacity-40 pt-1">03</span>
+                <h2 class="text-4xl md:text-5xl text-white font-title">Personalización UI/UX</h2>
+            </div>
+            <div class="glass-dark border-l-4 border-purple-500 rounded-[2rem] p-8 md:p-10 reveal-element mb-12">
+                <p class="text-slate-300 font-moodle text-lg leading-relaxed text-justify">
+                    Para garantizar la accesibilidad y adaptarse a las preferencias cognitivas de los gestores de salud,
+                    el dashboard incorpora un sistema de <strong>Multitema en tiempo real</strong> construido con
+                    variables CSS nativas. Esto permite a los usuarios modificar los contrastes y las paletas de toda la
+                    plataforma con un solo clic, reduciendo la fatiga visual.
+                </p>
+                <p class="text-purple-400 font-bold mt-4 font-moodle">Interactúa con los botones a continuación para
+                    cambiar la apariencia de las pantallas del portafolio en tiempo real:</p>
+
+                <div class="flex flex-wrap gap-4 mt-6">
+                    <button onclick="setGlobalTheme('light')"
+                        class="w-12 h-12 rounded-xl bg-[#f4f7fe] border-2 border-slate-300 hover:scale-110 transition-transform shadow-lg flex items-center justify-center text-slate-800"
+                        title="Light Theme"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                            </path>
+                        </svg></button>
+                    <button onclick="setGlobalTheme('dark')"
+                        class="w-12 h-12 rounded-xl bg-[#0b1437] border-2 border-slate-600 hover:scale-110 transition-transform shadow-lg flex items-center justify-center text-white"
+                        title="Dark Theme"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                            </path>
+                        </svg></button>
+                    <button onclick="setGlobalTheme('rose')"
+                        class="w-12 h-12 rounded-xl bg-[#fff1f2] border-2 border-rose-300 hover:scale-110 transition-transform shadow-lg flex items-center justify-center text-rose-800"
+                        title="Rose Theme"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                clip-rule="evenodd"></path>
+                        </svg></button>
+                    <button onclick="setGlobalTheme('amber')"
+                        class="w-12 h-12 rounded-xl bg-[#fffbeb] border-2 border-amber-300 hover:scale-110 transition-transform shadow-lg flex items-center justify-center text-amber-800"
+                        title="Amber Theme"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
+                            </path>
+                        </svg></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 5. MÓDULO 1: DEMOGRAFÍA (LAPTOP 1)             -->
+        <!-- ============================================== -->
+        <section class="mb-40">
+            <div class="flex items-center mb-8 reveal-element">
+                <span class="text-blue-500 font-title text-5xl mr-4 opacity-40 pt-1">04</span>
+                <h2 class="text-4xl md:text-5xl text-white font-title">Datos de los Participantes</h2>
+            </div>
+            <p class="text-slate-400 font-moodle max-w-3xl mb-12 reveal-element">Visualización integral de la población
+                impactada. Permite a la institución identificar rápidamente perfiles dominantes, rangos de edad y
+                distribución geográfica mediante gráficas interactivas.</p>
+
+            <div class="reveal-element delay-200 relative group">
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#3b82f6]/10 blur-[100px] rounded-full z-0">
+                </div>
+                <div class="laptop-mockup z-10">
+                    <div class="laptop-screen sys-theme sys-bg font-moodle p-4 md:p-10 dashboard-preview"
+                        data-theme="dark">
+
+                        <!-- KPIs Demografía -->
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+                            <div class="sys-card rounded-[1rem] p-4 border-l-[4px] sys-border-primary">
+                                <div class="text-2xl font-extrabold sys-text leading-none mb-1">43</div>
+                                <div
+                                    class="text-[10px] md:text-xs font-bold sys-text-muted uppercase tracking-wide truncate">
+                                    Cursos</div>
+                            </div>
+                            <div class="sys-card rounded-[1rem] p-4 border-l-[4px] sys-border-primary">
+                                <div class="text-2xl font-extrabold sys-text leading-none mb-1">9629</div>
+                                <div
+                                    class="text-[10px] md:text-xs font-bold sys-text-muted uppercase tracking-wide truncate">
+                                    Matrículas</div>
+                            </div>
+                            <div class="sys-card rounded-[1rem] p-4 border-l-[4px] sys-border-primary">
+                                <div class="text-2xl font-extrabold sys-text leading-none mb-1">5774</div>
+                                <div
+                                    class="text-[10px] md:text-xs font-bold sys-text-muted uppercase tracking-wide truncate">
+                                    Est. Únicos</div>
+                            </div>
+                            <div class="sys-card rounded-[1rem] p-4 border-l-[4px] sys-border-primary">
+                                <div class="text-2xl font-extrabold sys-text leading-none mb-1">3879</div>
+                                <div
+                                    class="text-[10px] md:text-xs font-bold sys-text-muted uppercase tracking-wide truncate">
+                                    Encuestas</div>
+                            </div>
+                            <div class="sys-card rounded-[1rem] p-4 border-l-[4px] sys-border-primary">
+                                <div class="text-2xl font-extrabold sys-text leading-none mb-1">55.1</div>
+                                <div
+                                    class="text-[10px] md:text-xs font-bold sys-text-muted uppercase tracking-wide truncate">
+                                    CHS</div>
+                            </div>
+                            <div class="sys-card rounded-[1rem] p-4 border-l-[4px] sys-border-primary">
+                                <div class="text-2xl font-extrabold sys-text leading-none mb-1">67.5</div>
+                                <div
+                                    class="text-[10px] md:text-xs font-bold sys-text-muted uppercase tracking-wide truncate">
+                                    e-NPS</div>
+                            </div>
+                        </div>
+
+                        <!-- Donuts Demografía -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                            <div class="sys-card rounded-2xl p-4 flex flex-col h-64 md:h-72">
+                                <h3 class="font-bold sys-text text-sm mb-2 shrink-0">Sexo</h3>
+                                <div class="flex-grow relative w-full min-h-0"><canvas id="cSexo"></canvas></div>
+                            </div>
+                            <div class="sys-card rounded-2xl p-4 flex flex-col h-64 md:h-72">
+                                <h3 class="font-bold sys-text text-sm mb-2 shrink-0">Curso de Vida</h3>
+                                <div class="flex-grow relative w-full min-h-0"><canvas id="cEdad"></canvas></div>
+                            </div>
+                            <div class="sys-card rounded-2xl p-4 flex flex-col h-64 md:h-72">
+                                <h3 class="font-bold sys-text text-sm mb-2 shrink-0">Perfil</h3>
+                                <div class="flex-grow relative w-full min-h-0"><canvas id="cPerfil"></canvas></div>
+                            </div>
+                            <div class="sys-card rounded-2xl p-4 flex flex-col h-64 md:h-72">
+                                <h3 class="font-bold sys-text text-sm mb-2 shrink-0">Escolaridad</h3>
+                                <div class="flex-grow relative w-full min-h-0"><canvas id="cEscolaridad"></canvas></div>
+                            </div>
+                        </div>
+
+                        <!-- Mapa y Barras -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="sys-card rounded-2xl p-4 flex flex-col h-80 md:h-72">
+                                <h3 class="font-bold sys-text text-sm mb-4 shrink-0">Mapa de Participación</h3>
+                                <div
+                                    class="flex-grow rounded-xl bg-white/5 border border-slate-500/20 relative overflow-hidden flex items-center justify-center p-4 min-h-0">
+                                    <svg class="w-full h-full opacity-80 mix-blend-luminosity" viewBox="0 0 100 100"
+                                        fill="none" stroke="currentColor" stroke-width="0.5">
+                                        <path d="M40 10 L70 20 L80 50 L60 80 L30 90 L10 60 Z" fill="var(--primary)"
+                                            fill-opacity="0.1" stroke="var(--primary)" stroke-opacity="0.3" />
+                                        <path d="M40 10 L70 20 L55 45 Z" fill="var(--primary)" fill-opacity="0.2" />
+                                        <path d="M70 20 L80 50 L55 45 Z" fill="var(--primary)" fill-opacity="0.4" />
+                                        <path d="M80 50 L60 80 L45 55 Z" fill="var(--primary)" fill-opacity="0.7" />
+                                        <path d="M60 80 L30 90 L45 55 Z" fill="var(--primary)" fill-opacity="0.5" />
+                                        <path d="M30 90 L10 60 L45 55 Z" fill="var(--primary)" fill-opacity="0.3" />
+                                        <path d="M10 60 L40 10 L55 45 Z" fill="var(--primary)" fill-opacity="0.2" />
+                                        <circle cx="55" cy="45" r="2" fill="var(--danger)" />
+                                        <circle cx="65" cy="65" r="3" fill="var(--danger)" />
+                                        <circle cx="35" cy="75" r="1.5" fill="var(--warning)" />
+                                        <circle cx="25" cy="40" r="2.5" fill="var(--success)" />
+                                    </svg>
+                                    <div class="absolute top-2 left-2 flex flex-col gap-1">
+                                        <div
+                                            class="w-6 h-6 sys-bg shadow rounded flex justify-center items-center text-xs font-bold sys-text">
+                                            +</div>
+                                        <div
+                                            class="w-6 h-6 sys-bg shadow rounded flex justify-center items-center text-xs font-bold sys-text">
+                                            -</div>
+                                    </div>
+                                    <div
+                                        class="absolute bottom-2 right-2 sys-bg px-2 py-1 rounded text-[9px] font-bold sys-text-muted flex items-center gap-1 shadow">
+                                        <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                                        Georeferenciación
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-2 sys-card rounded-2xl p-4 flex flex-col h-80 md:h-72">
+                                <h3 class="font-bold sys-text text-sm mb-4 shrink-0">Distribución por Ubicación</h3>
+                                <div class="flex-grow relative w-full min-h-0"><canvas id="cBarras"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 6. MÓDULO 2: OPERATIVO (LAPTOP 2)              -->
+        <!-- ============================================== -->
+        <section class="mb-40">
+            <div class="flex items-center mb-8 reveal-element">
+                <span class="text-emerald-500 font-title text-5xl mr-4 opacity-40 pt-1">05</span>
+                <h2 class="text-4xl md:text-5xl text-white font-title">Rendimiento Operativo</h2>
+            </div>
+            <p class="text-slate-400 font-moodle max-w-3xl mb-12 reveal-element">Monitoreo en tiempo real del progreso
+                académico. Este módulo fue diseñado para identificar tasas de éxito y generar alertas sobre focos de
+                inactividad o deserción masiva, apoyando a la toma de decisiones.</p>
+
+            <div class="reveal-element delay-200 relative">
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#05cd99]/10 blur-[100px] rounded-full z-0">
+                </div>
+                <div class="laptop-mockup z-10">
+                    <div class="laptop-screen sys-theme sys-bg font-moodle p-4 md:p-12 flex flex-col justify-center dashboard-preview"
+                        data-theme="dark">
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="sys-card rounded-3xl p-6 md:p-8 border-l-[8px] border-l-[#05cd99]">
+                                <div class="text-4xl md:text-5xl font-extrabold sys-text mb-2 tracking-tighter">55%
+                                </div>
+                                <div class="text-sm font-semibold sys-text-muted uppercase">Finalización</div>
+                            </div>
+                            <div class="sys-card rounded-3xl p-6 md:p-8 border-l-[8px] border-l-[#ffb547]">
+                                <div class="text-4xl md:text-5xl font-extrabold sys-text mb-2 tracking-tighter">5%</div>
+                                <div class="text-sm font-semibold sys-text-muted uppercase">Abandono</div>
+                            </div>
+                            <div class="sys-card rounded-3xl p-6 md:p-8 border-l-[8px] border-l-[#ee5d50]">
+                                <div class="text-4xl md:text-5xl font-extrabold sys-text mb-2 tracking-tighter">40%
+                                </div>
+                                <div class="text-sm font-semibold sys-text-muted uppercase">Inactividad</div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div class="lg:col-span-2 sys-card rounded-3xl p-6 md:p-8 flex flex-col">
+                                <h3 class="font-bold sys-text mb-6 shrink-0">Distribución del Estado de Capacitación
+                                </h3>
+                                <div class="flex-grow w-full relative min-h-[120px] flex items-center">
+                                    <div class="w-full h-16 md:h-20 rounded-lg flex overflow-hidden shadow-sm">
+                                        <div style="width: 55%; background-color: #05cd99;"
+                                            class="flex items-center justify-center text-white font-bold text-sm md:text-lg">
+                                            55%</div>
+                                        <div style="width: 5%; background-color: #ffb547;"
+                                            class="flex items-center justify-center text-white font-bold text-xs"></div>
+                                        <div style="width: 40%; background-color: #ee5d50;"
+                                            class="flex items-center justify-center text-white font-bold text-sm md:text-lg">
+                                            40%</div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap justify-center gap-4 mt-6">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3 h-3 rounded-sm bg-[#05cd99]"></div><span
+                                            class="text-xs font-bold sys-text-muted">Finalizaron</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3 h-3 rounded-sm bg-[#ffb547]"></div><span
+                                            class="text-xs font-bold sys-text-muted">Abandonaron</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3 h-3 rounded-sm bg-[#ee5d50]"></div><span
+                                            class="text-xs font-bold sys-text-muted">Inactivos</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="sys-card rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center text-center">
+                                <h3 class="font-bold sys-text mb-6 shrink-0">Ritmo de Aprendizaje</h3>
+                                <div
+                                    class="text-6xl md:text-7xl font-extrabold sys-text-primary mb-4 tabular-nums tracking-tighter">
+                                    19</div>
+                                <p class="text-xs font-semibold sys-text-muted uppercase tracking-wider">Días Promedio
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 7. MÓDULO 3: CALIDAD PERCIBIDA (LAPTOP 3)      -->
+        <!-- ============================================== -->
+        <section class="mb-40">
+            <div class="flex items-center mb-8 reveal-element">
+                <span class="text-orange-400 font-title text-5xl mr-4 opacity-40 pt-1">06</span>
+                <h2 class="text-4xl md:text-5xl text-white font-title">Calidad Percibida Institucional</h2>
+            </div>
+            <p class="text-slate-400 font-moodle max-w-3xl mb-12 reveal-element">Resultados consolidados de la encuesta
+                de satisfacción interna enviada a los usuarios. Este módulo analiza 13 preguntas clave estructuradas por
+                la Secretaría para calificar la plataforma, el desempeño docente y los contenidos.</p>
+
+            <div class="reveal-element delay-200 relative">
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#ffb547]/10 blur-[100px] rounded-full z-0">
+                </div>
+                <div class="laptop-mockup z-10">
+                    <div class="laptop-screen sys-theme sys-bg font-moodle p-4 md:p-10 dashboard-preview"
+                        data-theme="dark">
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:h-[500px]">
+                            <!-- Radar Chart -->
+                            <div class="sys-card rounded-3xl p-6 md:p-8 flex flex-col h-[400px] lg:h-full">
+                                <h3 class="font-bold sys-text mb-4 shrink-0">Perfil Institucional Consolidado</h3>
+                                <div class="flex-grow w-full relative min-h-0"><canvas id="cRadar"></canvas></div>
+                            </div>
+
+                            <!-- Lista de Preguntas -->
+                            <div
+                                class="sys-card rounded-3xl p-6 md:p-8 flex flex-col overflow-hidden h-[400px] lg:h-full">
+                                <h3 class="font-bold sys-text mb-6 shrink-0">Desglose Detallado (0 - 5.0)</h3>
+                                <div class="flex-grow overflow-y-auto pr-4 space-y-5 min-h-0" id="questions-list">
+                                    <!-- Generado por JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 8. MÓVIL Y ADAPTABILIDAD (PHONE MOCKUP)        -->
+        <!-- ============================================== -->
+        <section class="mb-20">
+            <div class="flex items-center mb-12 reveal-element">
+                <span class="text-blue-500 font-title text-5xl mr-4 opacity-40 pt-1">07</span>
+                <h2 class="text-4xl md:text-5xl text-white font-title">Mobile First & IA</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal-element delay-100">
+                <div class="order-last lg:order-first w-full flex justify-center py-10">
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen sys-theme sys-bg font-moodle p-5 pt-12 pb-10 dashboard-preview"
+                            data-theme="dark">
+                            <h2 class="text-xl font-bold sys-text-primary mb-1 text-center shrink-0">Panel Analítico
+                            </h2>
+                            <p class="text-[10px] sys-text-muted text-center mb-6 shrink-0">Moodle SecSalud - Versión
+                                Móvil</p>
+
+                            <div class="grid grid-cols-2 gap-3 mb-6 shrink-0">
+                                <div class="sys-card rounded-xl p-4 text-center">
+                                    <div class="text-2xl font-extrabold sys-text mb-1">9629</div>
+                                    <div class="text-[9px] font-bold sys-text-muted uppercase">Matrículas</div>
+                                </div>
+                                <div class="sys-card rounded-xl p-4 text-center">
+                                    <div class="text-2xl font-extrabold sys-text mb-1">55%</div>
+                                    <div class="text-[9px] font-bold sys-text-muted uppercase">Aprobación</div>
+                                </div>
+                            </div>
+
+                            <div class="sys-card rounded-2xl p-4 mb-6 flex flex-col shrink-0 h-[220px]">
+                                <h3 class="font-bold text-xs sys-text mb-4 text-center shrink-0">Participación por Sexo
+                                </h3>
+                                <div class="flex-grow w-full relative min-h-0"><canvas id="cMobileSexo"></canvas></div>
+                            </div>
+
+                            <div class="sys-card rounded-2xl p-5 border-t-2 sys-border-primary shrink-0">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div
+                                        class="w-6 h-6 rounded bg-[#4318ff]/10 text-[#4318ff] flex items-center justify-center">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                            <path
+                                                d="M12 2a2 2 0 012 2v2a2 2 0 01-2 2 2 2 0 01-2-2V4a2 2 0 012-2zm0 18a2 2 0 01-2-2v-2a2 2 0 012-2 2 2 0 012 2v2a2 2 0 01-2 2zM4 12a2 2 0 012-2h2a2 2 0 012 2 2 2 0 01-2 2h-2a2 2 0 01-2-2zM8.464 5.636a2 2 0 012.828 0l1.414 1.414a2 2 0 01-2.828 2.828L8.464 8.464a2 2 0 010-2.828zm7.072 7.072a2 2 0 012.828 0l1.414 1.414a2 2 0 01-2.828 2.828l-1.414-1.414a2 2 0 010-2.828z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="font-bold text-xs sys-text-primary">IA Diagnóstico</h3>
+                                </div>
+                                <p class="sys-text text-[11px] leading-relaxed">El perfil dominante es <strong>Área de
+                                        la salud</strong> con un 73% de fuerza femenina (Adultez).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-title text-3xl md:text-4xl text-white mb-6">Analítica en la palma de la mano</h3>
+                    <p class="text-slate-400 font-moodle mb-6 leading-relaxed text-justify">
+                        La interfaz fue construida bajo un enfoque <strong>Mobile-First</strong>, permitiendo a los
+                        gestores revisar la analítica desde cualquier dispositivo sin perder claridad visual ni
+                        interactividad.
+                    </p>
+                    <p class="text-slate-400 font-moodle mb-6 leading-relaxed text-justify">
+                        A través de un prototipo conversacional, la plataforma recopila información diagnóstica inicial
+                        del usuario. Estos datos alimentan la Inteligencia Artificial Adaptativa para generar
+                        recomendaciones y seguimiento en tiempo real directamente en la vista del celular.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 9. LLAMADO A LA ENTREVISTA / DEMO              -->
+        <!-- ============================================== -->
+        <section class="mb-20 reveal-element delay-100">
+            <div
+                class="bg-gradient-to-br from-[#1e293b] to-[#0f172a] rounded-[2.5rem] p-10 md:p-14 text-center border border-slate-800 shadow-2xl relative overflow-hidden">
+                <div
+                    class="absolute -top-20 -right-20 w-64 h-64 bg-blue-600/10 blur-3xl rounded-full pointer-events-none">
+                </div>
+                <div
+                    class="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-600/10 blur-3xl rounded-full pointer-events-none">
+                </div>
+
+                <h3 class="font-title text-3xl md:text-5xl text-white mb-6 relative z-10 tracking-tight">El proyecto
+                    completo está vivo</h3>
+                <p class="text-slate-400 font-moodle text-lg max-w-2xl mx-auto mb-8 relative z-10 leading-relaxed">
+                    Las interfaces mostradas aquí son solo un entorno simulado para el portafolio. El proyecto final,
+                    completamente codificado y conectado a bases de datos anonimizadas, está <strong>listo para ser
+                        revisado a profundidad durante una entrevista técnica</strong>.
+                </p>
+                <div
+                    class="inline-flex items-center gap-3 bg-blue-500/20 border border-blue-500/50 text-blue-400 px-6 py-3 rounded-full font-bold uppercase tracking-widest text-sm relative z-10">
+                    <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    Live Demo Ready
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-10 border-t border-white/10 pt-20 pb-12 relative overflow-hidden">
+        <div
+            class="w-full max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center text-slate-500 text-sm font-medium">
+            <p>&copy; 2026 Daniel F. Zamora Pineda</p>
+            <p class="mt-4 md:mt-0 font-moodle flex items-center">
+                Módulo UI/UX
+            </p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT PRINCIPAL: THEMES Y CHART.JS -->
+    <script>
+        let charts = {};
+
+        const questionsData = [
+            { q: "Pregunta de satisfacción #1", score: 4.6 },
+            { q: "Pregunta de satisfacción #2", score: 4.7 },
+            { q: "Pregunta de satisfacción #3", score: 4.6 },
+            { q: "Pregunta de satisfacción #4", score: 4.6 },
+            { q: "Pregunta de satisfacción #5", score: 4.6 },
+            { q: "Pregunta de satisfacción #6", score: 4.7 },
+            { q: "Pregunta de satisfacción #7", score: 4.8 },
+            { q: "Pregunta de satisfacción #8", score: 4.5 },
+            { q: "Pregunta de satisfacción #9", score: 4.4 },
+            { q: "Pregunta de satisfacción #10", score: 4.3 },
+            { q: "Pregunta de satisfacción #11", score: 4.6 },
+            { q: "Pregunta de satisfacción #12", score: 4.5 },
+            { q: "Pregunta de satisfacción #13", score: 4.9 }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Chart.defaults.font.family = "'Montserrat', sans-serif";
+
+            initCharts();
+            populateQuestions();
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
+            }, { root: null, rootMargin: '0px', threshold: 0.15 });
+            document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+        });
+
+        function setGlobalTheme(themeName) {
+            document.querySelectorAll('.dashboard-preview').forEach(el => {
+                el.setAttribute('data-theme', themeName);
+            });
+
+            let textColor = (themeName === 'dark') ? '#a3aed1' : '#64748b';
+
+            Object.values(charts).forEach(chart => {
+                chart.options.color = textColor;
+                if (chart.options.scales && chart.options.scales.x) {
+                    chart.options.scales.x.ticks.color = textColor;
+                }
+                chart.update();
+            });
+        }
+
+        function initCharts() {
+            const donutOpts = { responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }, color: '#a3aed1' };
+
+            charts.sexo = new Chart(document.getElementById('cSexo').getContext('2d'), { type: 'doughnut', data: { labels: ['Femenino', 'Masculino', 'Inter.'], datasets: [{ data: [73, 25, 2], backgroundColor: ['#4318ff', '#05cd99', '#ffb547'], borderWidth: 0 }] }, options: donutOpts });
+            charts.edad = new Chart(document.getElementById('cEdad').getContext('2d'), { type: 'doughnut', data: { labels: ['Adultez', 'Adolescencia', 'Juventud', 'Vejez'], datasets: [{ data: [45, 15, 30, 10], backgroundColor: ['#4318ff', '#05cd99', '#ffb547', '#ee5d50'], borderWidth: 0 }] }, options: donutOpts });
+            charts.perfil = new Chart(document.getElementById('cPerfil').getContext('2d'), { type: 'doughnut', data: { labels: ['Salud', 'Estudiante', 'Otro'], datasets: [{ data: [72, 18, 10], backgroundColor: ['#4318ff', '#05cd99', '#ffb547'], borderWidth: 0 }] }, options: donutOpts });
+            charts.esco = new Chart(document.getElementById('cEscolaridad').getContext('2d'), { type: 'doughnut', data: { labels: ['Pregrado', 'Bachiller', 'Postgrado', 'Ninguna'], datasets: [{ data: [45, 30, 20, 5], backgroundColor: ['#4318ff', '#05cd99', '#ffb547', '#ee5d50'], borderWidth: 0 }] }, options: donutOpts });
+
+            charts.barras = new Chart(document.getElementById('cBarras').getContext('2d'), {
+                type: 'bar',
+                data: { labels: ['C. 17', 'C. 19', 'C. 1', 'C. 10', 'C. 2', 'C. 15', 'C. 6'], datasets: [{ data: [450, 230, 220, 200, 200, 160, 150], backgroundColor: 'var(--primary)', borderRadius: 4 }] },
+                options: { color: '#a3aed1', indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { display: false }, border: { display: false }, ticks: { color: '#a3aed1' } } } }
+            });
+
+            charts.radar = new Chart(document.getElementById('cRadar').getContext('2d'), {
+                type: 'radar',
+                data: {
+                    labels: ['Material', 'Docente', 'UX Platfm.', 'Objetivos', 'Tiempo', 'Inquietudes'],
+                    datasets: [
+                        { label: 'Promedio Institucional', data: [4.2, 4.8, 3.5, 4.5, 4.0, 4.6], backgroundColor: 'rgba(67, 24, 255, 0.2)', borderColor: '#4318ff', pointBackgroundColor: '#4318ff', borderWidth: 2, pointRadius: 3 }
+                    ]
+                },
+                options: { color: '#a3aed1', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { r: { min: 0, max: 5, ticks: { display: false }, grid: { color: 'rgba(100,116,139,0.2)' }, pointLabels: { font: { size: 10 }, color: '#a3aed1' }, angleLines: { color: 'rgba(100,116,139,0.2)' } } } }
+            });
+
+            charts.mSexo = new Chart(document.getElementById('cMobileSexo').getContext('2d'), { type: 'doughnut', data: { labels: ['Femenino', 'Masculino'], datasets: [{ data: [73, 27], backgroundColor: ['#4318ff', '#05cd99'], borderWidth: 0 }] }, options: donutOpts });
+        }
+
+        function populateQuestions() {
+            const container = document.getElementById('questions-list');
+            let html = '';
+            questionsData.forEach(item => {
+                const pct = (item.score / 5) * 100;
+                html += `
+                <div>
+                    <div class="flex justify-between items-end mb-1">
+                        <span class="text-xs sys-text font-semibold max-w-[85%] leading-snug">${item.q}</span>
+                        <span class="text-sm font-extrabold sys-text-primary px-2 py-0.5 rounded bg-[#4318ff]/10">${item.score}</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: ${pct}%"></div>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+
+</html>
