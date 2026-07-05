@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcháte sin vaper | Portafolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CONEXIÓN CON ADOBE FONTS -->
+    <link rel="stylesheet" href="https://use.typekit.net/ubs0zra.css">
+
+    <style>
+        /* =======================================================
+           CONFIGURACIÓN TIPOGRÁFICA GLOBAL (Typekit)
+           ======================================================= */
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-family: 'articulat-cf', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .font-battery {
+            font-family: 'battery-park', 'Impact', 'Arial Black', sans-serif;
+            text-transform: uppercase;
+            font-weight: normal;
+        }
+
+        /* =======================================================
+           FONDOS VIBRANTES JUVENILES (Glassmorphism & Mesh)
+           ======================================================= */
+        .bg-dots-pattern {
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
+            animation: float 15s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            background-color: rgba(237, 162, 64, 0.4);
+            width: 70vw;
+            height: 70vw;
+            max-width: 800px;
+            max-height: 800px;
+            top: -10%;
+            right: -20%;
+        }
+
+        .blob-2 {
+            background-color: rgba(38, 46, 104, 0.3);
+            width: 60vw;
+            height: 60vw;
+            max-width: 700px;
+            max-height: 700px;
+            top: 40%;
+            left: -20%;
+            animation-delay: -5s;
+            animation-direction: alternate-reverse;
+        }
+
+        .blob-3 {
+            background-color: rgba(96, 165, 250, 0.3);
+            width: 50vw;
+            height: 50vw;
+            max-width: 600px;
+            max-height: 600px;
+            bottom: 0%;
+            right: 10%;
+            animation-delay: -2s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(-50px, 30px) scale(1.05) rotate(5deg);
+            }
+
+            100% {
+                transform: translate(30px, -50px) scale(0.95) rotate(-5deg);
+            }
+        }
+
+        .blend-multiply {
+            mix-blend-mode: multiply;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+        }
+
+        /* =======================================================
+           ANIMACIONES AL SCROLLEAR Y HOVER
+           ======================================================= */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
+        }
+
+        .reveal-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 {
+            transition-delay: 100ms;
+        }
+
+        .delay-200 {
+            transition-delay: 200ms;
+        }
+
+        .delay-300 {
+            transition-delay: 300ms;
+        }
+
+        .delay-400 {
+            transition-delay: 400ms;
+        }
+
+        .hover-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hover-card:hover {
+            transform: translateY(-10px) scale(1.02) !important;
+            box-shadow: 0 25px 50px -12px rgba(38, 46, 104, 0.15);
+            border-color: rgba(237, 162, 64, 0.5);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        @keyframes swing {
+            0% {
+                transform: rotate(4deg);
+            }
+
+            100% {
+                transform: rotate(-4deg);
+            }
+        }
+
+        .hanging-tag {
+            transform-origin: top center;
+            animation: swing 3.5s ease-in-out infinite alternate;
+        }
+
+        /* =======================================================
+           SECCIÓN ENTORNO DIGITAL: BARAJA SOBRE CELULAR
+           ======================================================= */
+        /* Celular dibujado en CSS puro */
+        .phone-mockup {
+            width: 320px;
+            height: 650px;
+            border: 14px solid #1e293b;
+            border-radius: 3rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 25px 50px -12px rgba(38, 46, 104, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.5);
+            z-index: 0;
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 130px;
+            height: 25px;
+            background-color: #1e293b;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 10;
+        }
+
+        /* Contenedores centrales responsivos */
+        .deck-wrapper {
+            position: relative;
+            width: 100%;
+            height: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        /* Estilo general de los posts (Cartas Feed) */
+        .post-card {
+            position: absolute;
+            width: 270px;
+            aspect-ratio: 3/4;
+            /* Proporción 1080x1440 */
+            border-radius: 1.5rem;
+            border: 4px solid white;
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            background: white;
+        }
+
+        /* Posiciones y rotaciones base (Como una baraja abierta) */
+        .post-left {
+            transform: translateX(-80px) rotate(-12deg);
+            z-index: 1;
+        }
+
+        .post-center {
+            transform: translateX(0) rotate(0deg);
+            z-index: 2;
+        }
+
+        .post-right {
+            transform: translateX(80px) rotate(12deg);
+            z-index: 1;
+        }
+
+        /* Efectos Hover individuales para los Posts */
+        .post-left:hover {
+            transform: translateX(-80px) rotate(0deg) scale(1.15) translateY(-20px);
+            z-index: 50;
+            box-shadow: 0 30px 60px rgba(38, 46, 104, 0.4);
+        }
+
+        .post-center:hover {
+            transform: translateX(0) rotate(0deg) scale(1.15) translateY(-20px);
+            z-index: 50;
+            box-shadow: 0 30px 60px rgba(38, 46, 104, 0.4);
+        }
+
+        .post-right:hover {
+            transform: translateX(80px) rotate(0deg) scale(1.15) translateY(-20px);
+            z-index: 50;
+            box-shadow: 0 30px 60px rgba(38, 46, 104, 0.4);
+        }
+
+        /* Estilo de la Historia (Story/Reels) */
+        .story-card {
+            position: absolute;
+            width: 300px;
+            aspect-ratio: 9/16;
+            /* Proporción 1080x1920 */
+            border-radius: 2rem;
+            border: 4px solid white;
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            background: white;
+            transform: rotate(8deg) scale(0.92) translateX(10px);
+            z-index: 10;
+        }
+
+        .story-card:hover {
+            transform: rotate(0deg) scale(1.05) translateY(-10px);
+            box-shadow: 0 30px 60px rgba(38, 46, 104, 0.4);
+            z-index: 50;
+        }
+
+        /* Ajuste para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .deck-wrapper {
+                height: 600px;
+                transform: scale(0.85);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-dots-pattern">
+
+    <!-- FONDOS VIBRANTES Y JUVENILES -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- BARRA DE NAVEGACIÓN (En parchate.html y generacion.html) -->
+    <nav class="sticky top-0 z-50 glass-card border-b-0 rounded-b-3xl mx-4 mt-2">
+        <div class="max-w-7xl mx-auto px-6 h-14 flex items-center reveal-element is-visible">
+
+            <!-- AQUÍ ESTÁ EL CAMBIO CLAVE EN EL HREF -->
+            <a href="../index.html#proyectos"
+                class="flex items-center text-[#262668] hover:text-[#EDA240] transition-colors text-sm font-bold">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Volver al Portafolio
+            </a>
+
+        </div>
+    </nav>
+
+    <main class="w-full max-w-7xl mx-auto px-6 py-16 md:py-24">
+
+        <!-- 1. CABECERA Y CONTEXTO -->
+        <header class="mb-32 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start md:items-center">
+            <!-- Columna Izquierda: El Logo Llavero -->
+            <div class="relative flex flex-col items-center lg:items-start reveal-element">
+                <h1 class="sr-only">Parcháte sin vaper</h1>
+                <div
+                    class="relative w-full max-w-[280px] md:max-w-[420px] max-md:-mt-[120px] md:-mt-[150px] z-[60] hanging-tag">
+                    <img src="PORTAFOLIO_2026.svg" alt="Logo Llavero Parcháte sin vaper"
+                        class="w-full h-auto drop-shadow-[0_25px_35px_rgba(38,46,104,0.3)]"
+                        onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNTAwIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI2Y4ZmFmYyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iSW50ZXIiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5NGEzYjgiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBPUlRBRk9MSU9fMjAyNi5zdmc8L3RleHQ+PC9zdmc+'">
+                </div>
+                <span
+                    class="inline-block py-2 px-5 rounded-full bg-[#262668] text-white font-bold tracking-widest uppercase text-xs mt-10 shadow-lg shadow-[#262668]/30">Identidad
+                    Visual & POP</span>
+            </div>
+
+            <!-- Columna Derecha: El Contexto -->
+            <div class="glass-card p-8 md:p-12 rounded-[2.5rem] relative z-10 mt-8 md:mt-0 reveal-element delay-200">
+                <h2 class="text-3xl text-[#EDA240] mb-5 flex items-center tracking-wide font-battery">El Reto & Concepto
+                </h2>
+                <p class="text-slate-700 leading-relaxed text-base md:text-lg font-medium">
+                    "Parcháte sin vaper" nace como un movimiento de concientización local. Utilizando el voseo caleño
+                    para romper la barrera institucional y hablar el mismo idioma que los jóvenes, la campaña busca
+                    normalizar el compartir con amigos sin la dependencia del cigarrillo electrónico. <span
+                        class="text-[#262668] font-bold">El diseño transmite energía, juventud y libertad.</span>
+                </p>
+            </div>
+        </header>
+
+        <!-- 2. SISTEMA VISUAL -->
+        <section class="mb-32 relative z-10">
+            <div class="flex items-center mb-12 reveal-element">
+                <span class="text-[#EDA240] font-battery text-5xl mr-4 opacity-40 pt-2">01</span>
+                <h2 class="text-5xl text-[#262668] tracking-wide">Sistema Visual</h2>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                <!-- Paleta de Colores -->
+                <div class="xl:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card reveal-element delay-100 flex flex-col">
+                        <div class="h-32 bg-[#EDA240] w-full relative shrink-0"></div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-2xl mb-4 text-[#262668]">Naranja Vibrante</h3>
+                            <div class="space-y-3 text-sm text-slate-600 font-mono font-medium">
+                                <p class="flex justify-between border-b border-slate-200 pb-1"><span
+                                        class="text-slate-400">HEX</span> <span
+                                        class="font-bold text-[#EDA240]">#EDA240</span></p>
+                                <p class="flex justify-between border-b border-slate-200 pb-1"><span
+                                        class="text-slate-400">RGB</span> <span>237, 162, 64</span></p>
+                                <p class="flex justify-between"><span class="text-slate-400">CMYK</span> <span>5, 42,
+                                        81, 0</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card reveal-element delay-200 flex flex-col">
+                        <div class="h-32 bg-[#262668] w-full relative shrink-0"></div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-2xl mb-4 text-[#262668]">Azul Nocturno</h3>
+                            <div class="space-y-3 text-sm text-slate-600 font-mono font-medium">
+                                <p class="flex justify-between border-b border-slate-200 pb-1"><span
+                                        class="text-slate-400">HEX</span> <span
+                                        class="font-bold text-[#262668]">#262668</span></p>
+                                <p class="flex justify-between border-b border-slate-200 pb-1"><span
+                                        class="text-slate-400">RGB</span> <span>38, 46, 104</span></p>
+                                <p class="flex justify-between"><span class="text-slate-400">CMYK</span> <span>100, 91,
+                                        28, 15</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card reveal-element delay-300 flex flex-col">
+                        <div class="h-32 bg-[#E6E7E8] w-full relative shrink-0"></div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-2xl mb-4 text-[#262668]">Gris Neutro</h3>
+                            <div class="space-y-3 text-sm text-slate-600 font-mono font-medium">
+                                <p class="flex justify-between border-b border-slate-200 pb-1"><span
+                                        class="text-slate-400">HEX</span> <span
+                                        class="font-bold text-slate-700">#E6E7E8</span></p>
+                                <p class="flex justify-between border-b border-slate-200 pb-1"><span
+                                        class="text-slate-400">RGB</span> <span>230, 231, 232</span></p>
+                                <p class="flex justify-between"><span class="text-slate-400">CMYK</span> <span>12, 8, 8,
+                                        0</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tipografías -->
+                <div
+                    class="glass-card rounded-[2rem] p-8 flex flex-col justify-center relative overflow-hidden reveal-element delay-400">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 text-9xl font-battery text-[#262668]">Aa</div>
+                    <div class="mb-10 relative z-10">
+                        <p class="text-xs text-[#EDA240] font-bold uppercase tracking-widest mb-3">Titulares</p>
+                        <h3 class="text-5xl text-[#262668] tracking-wide">Battery Park</h3>
+                        <p class="text-lg text-slate-500 mt-4 font-battery tracking-widest break-words leading-relaxed">
+                            ABCDEFGHIJKLMNN<br>OPQRSTUVWXYZ</p>
+                    </div>
+                    <div class="border-t border-slate-200 pt-8 relative z-10">
+                        <p class="text-xs text-[#60a5fa] font-bold uppercase tracking-widest mb-3"
+                            style="font-family: 'articulat-cf', sans-serif;">Párrafos</p>
+                        <h3 class="text-4xl text-[#262668] font-bold tracking-tight"
+                            style="font-family: 'articulat-cf', sans-serif; text-transform: none;">Articulat CF</h3>
+                        <p class="text-base text-slate-600 mt-4 leading-relaxed font-medium">Aa Bb Cc Dd Ee Ff Gg Hh Ii
+                            Jj Kk Ll Mm Nn Oo Pp</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. GALERÍA MATERIAL POP -->
+        <section class="mb-20">
+            <div class="reveal-element">
+                <div class="flex items-center mb-6">
+                    <span class="text-[#EDA240] font-battery text-5xl mr-4 opacity-40 pt-2">02</span>
+                    <h2 class="text-5xl text-[#262668] tracking-wide">Aplicaciones POP</h2>
+                </div>
+                <p class="text-slate-600 mb-16 max-w-3xl text-xl font-medium">Versatilidad de la identidad visual
+                    aplicada en el mundo real, diseñada para conectar con la juventud de manera natural y directa.</p>
+            </div>
+
+            <!-- CATEGORÍA 1: LLAVERAS -->
+            <div class="mb-24">
+                <h3
+                    class="text-3xl text-[#262668] mb-8 border-l-8 border-[#EDA240] pl-6 reveal-element rounded-l-md font-battery">
+                    Llaveros Conmemorativos</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 auto-rows-[200px] md:auto-rows-[280px]">
+                    <div
+                        class="col-span-2 row-span-2 glass-card rounded-[2.5rem] overflow-hidden hover-card flex items-center justify-center p-6 reveal-element">
+                        <img src="PORTAFOLIO_2026-02.jpg" alt="Llavero Principal"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNmMThmOSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5NGEzYjgiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBPUlRBRk9MSU9fMjAyNi0wMi5qcGc8L3RleHQ+PC9zdmc+'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-100">
+                        <img src="PORTAFOLIO_2026-03.jpg" alt="Llavero 2"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 03</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-200">
+                        <img src="PORTAFOLIO_2026-04.jpg" alt="Llavero 3"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 04</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-300">
+                        <img src="PORTAFOLIO_2026-05.jpg" alt="Llavero 4"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 05</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-400">
+                        <img src="PORTAFOLIO_2026-06.jpg" alt="Llavero 5"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 06</span>'">
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORÍA 2: CAMISETAS -->
+            <div class="mb-24">
+                <h3
+                    class="text-3xl text-[#262668] mb-8 border-l-8 border-[#60A5FA] pl-6 reveal-element rounded-l-md font-battery">
+                    Apparel / Camisetas</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 auto-rows-[200px] md:auto-rows-[280px]">
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-100">
+                        <img src="PORTAFOLIO_2026-07.jpg" alt="Camiseta 1"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 07</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-200">
+                        <img src="PORTAFOLIO_2026-08.jpg" alt="Camiseta 2"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 08</span>'">
+                    </div>
+                    <div
+                        class="col-span-2 row-span-2 glass-card rounded-[2.5rem] overflow-hidden hover-card flex items-center justify-center p-6 order-first md:order-none reveal-element">
+                        <img src="PORTAFOLIO_2026-09.jpg" alt="Camiseta Principal"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 09 (Principal)</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-300">
+                        <img src="PORTAFOLIO_2026-10.jpg" alt="Camiseta 4"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 10</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-400">
+                        <img src="PORTAFOLIO_2026-11.jpg" alt="Camiseta 5"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 11</span>'">
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORÍA 3: BOLSAS -->
+            <div class="mb-24">
+                <h3
+                    class="text-3xl text-[#262668] mb-8 border-l-8 border-[#EDA240] pl-6 reveal-element rounded-l-md font-battery">
+                    Packaging Ecológico</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 auto-rows-[200px] md:auto-rows-[280px]">
+                    <div
+                        class="col-span-2 row-span-2 glass-card rounded-[2.5rem] overflow-hidden hover-card flex items-center justify-center p-6 reveal-element">
+                        <img src="PORTAFOLIO_2026-15.jpg" alt="Bolsa Principal"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 15 (Principal)</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-100">
+                        <img src="PORTAFOLIO_2026-13.jpg" alt="Bolsa 2"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 13</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-200">
+                        <img src="PORTAFOLIO_2026-14.jpg" alt="Bolsa 3"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 14</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-300">
+                        <img src="PORTAFOLIO_2026-12.jpg" alt="Bolsa 4"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 12</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-400">
+                        <img src="PORTAFOLIO_2026-16.jpg" alt="Bolsa 5"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 16</span>'">
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORÍA 4: GORRAS -->
+            <div class="mb-12">
+                <h3
+                    class="text-3xl text-[#262668] mb-8 border-l-8 border-[#60A5FA] pl-6 reveal-element rounded-l-md font-battery">
+                    Headwear / Gorras</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 auto-rows-[200px] md:auto-rows-[280px]">
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-100">
+                        <img src="PORTAFOLIO_2026-17.jpg" alt="Gorra 1"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 17</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-200">
+                        <img src="PORTAFOLIO_2026-18.jpg" alt="Gorra 2"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 18</span>'">
+                    </div>
+                    <div
+                        class="col-span-2 row-span-2 glass-card rounded-[2.5rem] overflow-hidden hover-card flex items-center justify-center p-6 order-first md:order-none reveal-element">
+                        <img src="PORTAFOLIO_2026-21.jpg" alt="Gorra Principal"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 21 (Principal)</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-300">
+                        <img src="PORTAFOLIO_2026-20.jpg" alt="Gorra 4"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 20</span>'">
+                    </div>
+                    <div
+                        class="glass-card rounded-[2rem] overflow-hidden hover-card flex items-center justify-center p-4 reveal-element delay-400">
+                        <img src="PORTAFOLIO_2026-19.jpg" alt="Gorra 5"
+                            class="w-full h-full object-contain blend-multiply"
+                            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-xs font-bold text-slate-400\'>IMG 19</span>'">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- 4. ENTORNO DIGITAL (FEED Y STORIES)            -->
+        <!-- ============================================== -->
+        <section class="mb-20">
+            <div class="reveal-element">
+                <div class="flex items-center mb-6">
+                    <span class="text-[#EDA240] font-battery text-5xl mr-4 opacity-40 pt-2">03</span>
+                    <h2 class="text-5xl text-[#262668] tracking-wide">Entorno Digital</h2>
+                </div>
+                <p class="text-slate-600 mb-16 max-w-3xl text-xl font-medium">Comunicación en redes sociales (Feed
+                    1080x1440 e Historias 1080x1920). Pasa el mouse sobre las composiciones para interactuar con los
+                    diseños.</p>
+            </div>
+
+            <!-- Contenedor Interactivo en Dos Columnas -->
+            <div class="glass-card rounded-[3rem] p-6 md:p-10 overflow-hidden relative reveal-element delay-200">
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-12 xl:gap-8">
+
+                    <!-- COLUMNA 1: BARAJA DE POSTS (FEED) -->
+                    <div class="flex flex-col items-center w-full">
+                        <h3 class="text-2xl text-[#262668] font-battery mb-2 opacity-80 tracking-widest">Posts / Feed
+                        </h3>
+                        <div class="deck-wrapper w-full">
+                            <!-- Mockup Celular de fondo -->
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                            </div>
+
+                            <!-- Cartas de los Posts -->
+                            <div class="post-card post-left">
+                                <img src="PORTAFOLIO_2026-24.jpg" alt="Post de Redes 1"
+                                    class="w-full h-full object-cover blend-multiply"
+                                    onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex flex-col items-center justify-center bg-slate-100\'><span class=\'font-battery text-3xl text-[#262668]\'>POST 1</span><span class=\'text-slate-400 font-mono text-sm mt-2\'>1080 x 1440</span></div>'">
+                            </div>
+
+                            <div class="post-card post-center">
+                                <img src="PORTAFOLIO_2026-23.jpg" alt="Post de Redes 2"
+                                    class="w-full h-full object-cover blend-multiply"
+                                    onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex flex-col items-center justify-center bg-slate-100\'><span class=\'font-battery text-3xl text-[#262668]\'>POST 2</span><span class=\'text-slate-400 font-mono text-sm mt-2\'>1080 x 1440</span></div>'">
+                            </div>
+
+                            <div class="post-card post-right">
+                                <img src="PORTAFOLIO_2026-25.jpg" alt="Post de Redes 3"
+                                    class="w-full h-full object-cover blend-multiply"
+                                    onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex flex-col items-center justify-center bg-slate-100\'><span class=\'font-battery text-3xl text-[#262668]\'>POST 3</span><span class=\'text-slate-400 font-mono text-sm mt-2\'>1080 x 1440</span></div>'">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COLUMNA 2: HISTORIA LADEADA -->
+                    <div class="flex flex-col items-center w-full">
+                        <h3 class="text-2xl text-[#262668] font-battery mb-2 opacity-80 tracking-widest">Stories / Reels
+                        </h3>
+                        <div class="deck-wrapper w-full">
+                            <!-- Mockup Celular de fondo -->
+                            <div class="phone-mockup">
+                                <div class="phone-notch"></div>
+                            </div>
+
+                            <!-- Carta de la Historia -->
+                            <div class="story-card">
+                                <img src="PORTAFOLIO_2026-26.jpg" alt="Historia de Redes 1"
+                                    class="w-full h-full object-cover blend-multiply"
+                                    onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'w-full h-full flex flex-col items-center justify-center bg-slate-100\'><span class=\'font-battery text-3xl text-[#262668]\'>STORY</span><span class=\'text-slate-400 font-mono text-sm mt-2\'>1080 x 1920</span></div>'">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="glass-card border-x-0 border-b-0 rounded-t-3xl mt-20 py-10 reveal-element">
+        <div
+            class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-[#000066] text-sm font-bold">
+            <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                <p>&copy; Daniel F. Zamora Pineda.</p>
+                <p class="text-xs text-[#000066]/70 mt-2 font-medium italic font-sans">Disclaimer: Todo el material
+                    visual es un ejercicio de diseño para portafolio. Nada de esto es una campaña real.</p>
+            </div>
+            <p class="mt-4 md:mt-0 flex items-center">
+                Desarrollado a mano con <span
+                    class="bg-[#F042FF] text-white px-3 py-1 rounded-full mx-2 font-riot tracking-widest">HTML</span> &
+                <span class="bg-[#6633FF] text-white px-3 py-1 rounded-full mx-1 font-riot tracking-widest">CSS</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT PARA ANIMACIONES AL HACER SCROLL -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    } else {
+                        entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, observerOptions);
+
+            const elementsToReveal = document.querySelectorAll('.reveal-element');
+
+            elementsToReveal.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+
+</html>
