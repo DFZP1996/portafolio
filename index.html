@@ -9,10 +9,12 @@
 
     <!-- CONEXIÓN CON ADOBE FONTS (Tu Web Project) -->
     <link rel="stylesheet" href="https://use.typekit.net/ubs0zra.css">
+    <!-- FUENTE SERIF (Para la portada de DC Un Gusto) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
         /* =======================================================
-           CONFIGURACIÓN GLOBAL (Dark Premium con tus fuentes)
+           CONFIGURACIÓN GLOBAL (Dark Premium)
            ======================================================= */
         body {
             background-color: #050505;
@@ -23,19 +25,20 @@
             selection-color: white;
         }
 
-        /* Articulat CF para Titulares (Limpios y modernos) */
         h1, h2, h3, h4, h5, .font-title {
             font-family: 'articulat-cf', sans-serif;
             font-weight: 700;
         }
 
-        /* Tipografías de las Campañas (Para los covers) */
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        /* Tipografías de las Campañas */
         .font-battery { font-family: 'battery-park', 'Impact', sans-serif; text-transform: uppercase; }
         .font-riot { font-family: 'protest-riot', 'proteste-riot', 'Impact', sans-serif; text-transform: uppercase; }
         .font-revo { font-family: 'protest-revolution', 'Brush Script MT', cursive; }
 
         /* =======================================================
-           FONDOS AMBIENTALES (Luz sutil)
+           FONDOS AMBIENTALES
            ======================================================= */
         .ambient-light {
             position: absolute;
@@ -74,7 +77,7 @@
 
         .project-img-wrapper { overflow: hidden; min-height: 220px; }
         .project-img { transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .project-card:hover .project-img { transform: scale(1.05); }
+        .project-card:hover .project-img { transform: scale(1.03); }
 
         /* =======================================================
            ANIMACIONES REVEAL (Scroll)
@@ -143,20 +146,63 @@
         <!-- ============================================== -->
         <section id="proyectos" class="py-24">
 
-            <!-- NODO 1: IDENTIDAD VISUAL & CAMPANAS -->
+            <!-- ============================================== -->
+            <!-- NODO 1: BRANDING Y ESTRATEGIA                  -->
+            <!-- ============================================== -->
             <div class="flex flex-col md:flex-row gap-8 md:gap-16 relative pb-32 border-l border-white/10 md:border-none pl-6 md:pl-0 reveal-element">
-                
+                <div class="md:w-1/3 md:sticky md:top-32 h-fit mb-8 md:mb-0 relative">
+                    <div class="absolute -left-[31px] top-2 w-3 h-3 rounded-full bg-[#D66D38] md:hidden"></div>
+                    <span class="text-[#D66D38] font-bold tracking-widest text-xs uppercase mb-3 block">Categoría 01</span>
+                    <h3 class="font-title text-3xl md:text-4xl text-white leading-tight">Branding <br> & Estrategia</h3>
+                    <p class="text-slate-500 mt-4 text-sm max-w-xs">Arquitectura de marca, storytelling corporativo, naming, UX writing y manuales de identidad.</p>
+                </div>
+
+                <div class="md:w-2/3 flex flex-col gap-12 md:border-l md:border-white/10 md:pl-16 relative">
+                    <div class="hidden md:block absolute -left-[7px] top-4 w-3 h-3 rounded-full bg-[#D66D38]"></div>
+
+                    <!-- PROYECTO: DC UN GUSTO (ESTRATEGIA) -->
+                    <a href="dc-un-gusto/dc-un-gusto.html" class="group block">
+                        <div class="glass-dark rounded-[2rem] p-6 project-card flex flex-col gap-6">
+                            <!-- Portada HTML Abstracta DC Un Gusto -->
+                            <div class="w-full aspect-video rounded-xl project-img-wrapper relative bg-[#0C1828] border border-slate-800 overflow-hidden">
+                                <div class="project-img absolute inset-0 bg-[#0C1828] p-6 flex flex-col items-center justify-center text-center">
+                                    <!-- Círculos difusos de color -->
+                                    <div class="absolute top-0 right-0 w-40 h-40 bg-[#00557A]/40 blur-3xl rounded-full"></div>
+                                    <div class="absolute bottom-0 left-0 w-40 h-40 bg-[#D66D38]/20 blur-3xl rounded-full"></div>
+                                    
+                                    <h3 class="text-[#D66D38] font-bold text-xs uppercase tracking-widest mb-4 relative z-10 font-title">Brand Strategy Book</h3>
+                                    <div class="text-[#F9F7F2] font-serif italic text-4xl sm:text-5xl md:text-6xl leading-tight relative z-10">"Dése un gusto"</div>
+                                    <p class="text-slate-400 text-xs tracking-[0.2em] mt-4 uppercase relative z-10 font-title">Madrid, ES</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-3">
+                                    <h4 class="font-title text-2xl text-white group-hover:text-[#EDA837] transition-colors">DC Un Gusto: Naming & Estrategia</h4>
+                                    <svg class="w-6 h-6 text-slate-600 group-hover:text-[#EDA837] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                </div>
+                                <p class="text-slate-400 text-sm leading-relaxed">Estrategia integral de marca gastronómica internacional. Desarrollo de Naming oculto, manifiesto de marca, tono de voz (UX Writing) y universo visual.</p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- NODO 2: IDENTIDAD VISUAL & CAMPANAS            -->
+            <!-- ============================================== -->
+            <div class="flex flex-col md:flex-row gap-8 md:gap-16 relative pb-32 border-l border-white/10 md:border-none pl-6 md:pl-0 reveal-element">
                 <div class="md:w-1/3 md:sticky md:top-32 h-fit mb-8 md:mb-0 relative">
                     <div class="absolute -left-[31px] top-2 w-3 h-3 rounded-full bg-blue-500 md:hidden"></div>
-                    <span class="text-blue-500 font-bold tracking-widest text-xs uppercase mb-3 block">Categoría 01</span>
+                    <span class="text-blue-500 font-bold tracking-widest text-xs uppercase mb-3 block">Categoría 02</span>
                     <h3 class="font-title text-3xl md:text-4xl text-white leading-tight">Identidad Visual <br> & Campañas OOH</h3>
-                    <p class="text-slate-500 mt-4 text-sm max-w-xs">Creación de marcas, material POP, publicidad exterior y comunicación digital.</p>
+                    <p class="text-slate-500 mt-4 text-sm max-w-xs">Creación de logos, material POP, publicidad exterior y comunicación digital.</p>
                 </div>
 
                 <div class="md:w-2/3 flex flex-col gap-16 md:border-l md:border-white/10 md:pl-16 relative">
                     <div class="hidden md:block absolute -left-[7px] top-4 w-3 h-3 rounded-full bg-blue-500"></div>
 
-                    <!-- PROYECTO A: PARCHÁTE -->
+                    <!-- PROYECTO: PARCHÁTE -->
                     <a href="parchate/parchate.html" class="group block">
                         <div class="glass-dark rounded-[2rem] p-6 project-card flex flex-col gap-6">
                             <div class="w-full aspect-video rounded-xl project-img-wrapper relative bg-slate-900 border border-slate-800 overflow-hidden">
@@ -165,15 +211,13 @@
                                     <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-[#262668]/30 rounded-full blur-2xl"></div>
 
                                     <div class="w-1/2 flex flex-col justify-center pr-4 relative z-10 border-r border-slate-200">
-                                        <p class="text-[10px] text-[#EDA240] font-bold tracking-widest uppercase mb-2 font-sans">Identidad</p>
+                                        <p class="text-[10px] text-[#EDA240] font-bold tracking-widest uppercase mb-2 font-title">Identidad</p>
                                         <h4 class="font-battery text-2xl sm:text-3xl md:text-4xl text-[#262668] leading-[0.9] mb-3">PARCHÁTE<br>SIN VAPER</h4>
-                                        <p class="font-title text-[10px] sm:text-xs text-slate-400">Aa Bb Cc Dd Ee Ff</p>
                                     </div>
 
                                     <div class="w-1/2 flex flex-col gap-3 justify-center relative z-10 pl-4 sm:pl-6">
-                                        <div class="h-8 sm:h-10 w-full bg-[#EDA240] rounded-lg shadow-md flex items-center justify-between px-3"><span class="text-[10px] font-sans font-bold text-white/90">Naranja</span><span class="text-[10px] font-mono text-white/70">#EDA240</span></div>
-                                        <div class="h-8 sm:h-10 w-full bg-[#262668] rounded-lg shadow-md flex items-center justify-between px-3"><span class="text-[10px] font-sans font-bold text-white/90">Azul M.</span><span class="text-[10px] font-mono text-white/50">#262668</span></div>
-                                        <div class="h-8 sm:h-10 w-full bg-[#E6E7E8] rounded-lg shadow-md flex items-center justify-between px-3"><span class="text-[10px] font-sans font-bold text-slate-600">Gris</span><span class="text-[10px] font-mono text-slate-400">#E6E7E8</span></div>
+                                        <div class="h-8 sm:h-10 w-full bg-[#EDA240] rounded-lg shadow-md flex items-center justify-between px-3"><span class="text-[10px] font-title font-bold text-white/90">Naranja</span></div>
+                                        <div class="h-8 sm:h-10 w-full bg-[#262668] rounded-lg shadow-md flex items-center justify-between px-3"><span class="text-[10px] font-title font-bold text-white/90">Azul M.</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -182,12 +226,12 @@
                                     <h4 class="font-title text-2xl text-white group-hover:text-[#EDA240] transition-colors">Parcháte sin vaper</h4>
                                     <svg class="w-6 h-6 text-slate-600 group-hover:text-[#EDA240] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                                 </div>
-                                <p class="text-slate-400 text-sm leading-relaxed">Identidad visual cálida y cercana. Aplicaciones en material promocional (Llaveros, gorras, bolsas) enfocadas en la juventud caleña.</p>
+                                <p class="text-slate-400 text-sm leading-relaxed">Identidad visual cálida y cercana enfocada en la juventud caleña. Aplicaciones en material promocional (POP) y redes sociales.</p>
                             </div>
                         </div>
                     </a>
 
-                    <!-- PROYECTO B: GENERACIÓN -->
+                    <!-- PROYECTO: GENERACIÓN -->
                     <a href="generacion/generacion.html" class="group block">
                         <div class="glass-dark rounded-[2rem] p-6 project-card flex flex-col gap-6">
                             <div class="w-full aspect-video rounded-xl project-img-wrapper relative bg-slate-900 border border-slate-800 overflow-hidden">
@@ -198,9 +242,8 @@
                                         <h4 class="font-revo text-xl sm:text-2xl md:text-3xl text-[#F042FF] leading-none ml-2">Sin Vaper</h4>
                                     </div>
                                     <div class="w-1/2 relative flex items-center justify-center z-10 h-full">
-                                        <div class="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#F042FF] mix-blend-screen shadow-[0_0_25px_#F042FF] -translate-x-6 -translate-y-4 opacity-90 flex items-center justify-center text-[#000033] font-bold text-[8px] sm:text-[10px]">MG</div>
-                                        <div class="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#B7F5F5] mix-blend-screen shadow-[0_0_25px_#B7F5F5] translate-x-4 -translate-y-2 opacity-90 flex items-center justify-center text-[#000033] font-bold text-[8px] sm:text-[10px]">CY</div>
-                                        <div class="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#6633FF] mix-blend-screen shadow-[0_0_25px_#6633FF] translate-y-8 opacity-90 flex items-center justify-center text-[#000033] font-bold text-[8px] sm:text-[10px]">UV</div>
+                                        <div class="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#F042FF] mix-blend-screen shadow-[0_0_25px_#F042FF] -translate-x-6 -translate-y-4 opacity-90 flex items-center justify-center text-[#000033] font-bold text-[8px]">OOH</div>
+                                        <div class="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#B7F5F5] mix-blend-screen shadow-[0_0_25px_#B7F5F5] translate-x-4 -translate-y-2 opacity-90 flex items-center justify-center text-[#000033] font-bold text-[8px]">NEON</div>
                                     </div>
                                 </div>
                             </div>
@@ -209,53 +252,43 @@
                                     <h4 class="font-title text-2xl text-white group-hover:text-[#F042FF] transition-colors">Generación sin vaper</h4>
                                     <svg class="w-6 h-6 text-slate-600 group-hover:text-[#F042FF] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                                 </div>
-                                <p class="text-slate-400 text-sm leading-relaxed">La contrapropuesta urbana. Estética Synthwave aplicada a publicidad exterior (Afiches, vallas, pasacalles) y logometría neón.</p>
+                                <p class="text-slate-400 text-sm leading-relaxed">La contrapropuesta urbana. Estética Synthwave aplicada a publicidad exterior de gran formato (Vallas, pasacalles).</p>
                             </div>
                         </div>
                     </a>
-
                 </div>
             </div>
 
-            <!-- NODO 2: DASHBOARDS Y PLATAFORMAS (MOODLE) -->
+            <!-- ============================================== -->
+            <!-- NODO 3: DASHBOARDS Y PLATAFORMAS               -->
+            <!-- ============================================== -->
             <div class="flex flex-col md:flex-row gap-8 md:gap-16 relative pb-12 border-l border-white/10 md:border-none pl-6 md:pl-0 reveal-element">
-                
                 <div class="md:w-1/3 md:sticky md:top-32 h-fit mb-8 md:mb-0 relative">
-                    <div class="absolute -left-[31px] top-2 w-3 h-3 rounded-full bg-[#3b82f6] md:hidden"></div>
-                    <span class="text-[#3b82f6] font-bold tracking-widest text-xs uppercase mb-3 block">Categoría 02</span>
-                    <h3 class="font-title text-3xl md:text-4xl text-white leading-tight">Diseño UI/UX <br> & E-learning</h3>
-                    <p class="text-slate-500 mt-4 text-sm max-w-xs">Estructuración de datos, interfaces de usuario y maquetación de plataformas educativas.</p>
+                    <div class="absolute -left-[31px] top-2 w-3 h-3 rounded-full bg-[#05cd99] md:hidden"></div>
+                    <span class="text-[#05cd99] font-bold tracking-widest text-xs uppercase mb-3 block">Categoría 03</span>
+                    <h3 class="font-title text-3xl md:text-4xl text-white leading-tight">Diseño UI/UX <br> & Analítica</h3>
+                    <p class="text-slate-500 mt-4 text-sm max-w-xs">Estructuración de datos, interfaces de usuario y dashboards interactivos (Front-End).</p>
                 </div>
 
                 <div class="md:w-2/3 flex flex-col gap-12 md:border-l md:border-white/10 md:pl-16 relative">
-                    <div class="hidden md:block absolute -left-[7px] top-4 w-3 h-3 rounded-full bg-[#3b82f6]"></div>
+                    <div class="hidden md:block absolute -left-[7px] top-4 w-3 h-3 rounded-full bg-[#05cd99]"></div>
 
-                    <!-- PROYECTO C: TESIS MOODLE SECSALUD -->
-                    <!-- ENLACE CORREGIDO A moodle/moodle.html -->
+                    <!-- PROYECTO: TESIS MOODLE SECSALUD -->
                     <a href="moodle/moodle.html" class="group block">
                         <div class="glass-dark rounded-[2rem] p-6 project-card flex flex-col gap-6">
-                            
-                            <!-- WRAPPER DE LA PORTADA NUEVA HTML (ESTILO BENTO DASHBOARD) -->
+                            <!-- Portada Moodle HTML (Estilo Dashboard) -->
                             <div class="w-full aspect-video rounded-xl project-img-wrapper relative bg-[#0b1437] border border-slate-800 overflow-hidden">
-                                
                                 <div class="project-img absolute inset-0 bg-[#0b1437] p-6 flex flex-col justify-center">
-                                    <!-- Fondo con efecto de luz -->
                                     <div class="absolute top-0 right-0 w-32 h-32 bg-[#4318ff]/30 blur-2xl rounded-full"></div>
                                     <div class="absolute bottom-0 left-0 w-32 h-32 bg-[#05cd99]/20 blur-2xl rounded-full"></div>
                                     
-                                    <!-- UI Abstracta: Bento Box Layout simulando el Dashboard -->
                                     <div class="relative z-10 w-full max-w-sm mx-auto bg-[#111c44] border border-[#1f2937] rounded-xl p-5 shadow-2xl flex flex-col gap-4">
-                                        <!-- Header falso -->
                                         <div class="flex justify-between items-center mb-2 border-b border-white/5 pb-3">
                                             <div class="flex items-center gap-2">
-                                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-                                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                                                <div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div>
                                             </div>
                                             <div class="h-2 w-20 bg-[#4318ff]/50 rounded-full"></div>
                                         </div>
-                                        
-                                        <!-- KPIs Falsos -->
                                         <div class="grid grid-cols-2 gap-3">
                                             <div class="bg-[#f8fafc]/5 rounded-lg p-3 flex flex-col items-center justify-center border border-white/5">
                                                 <div class="h-1.5 w-10 bg-slate-500 rounded-full mb-2"></div>
@@ -265,34 +298,24 @@
                                                 <div class="h-1.5 w-10 bg-slate-500 rounded-full mb-2"></div>
                                                 <div class="text-[#4318ff] font-bold text-2xl leading-none">9K+</div>
                                             </div>
-                                            
-                                            <!-- Barra Horizontal Simulación (Chart) -->
                                             <div class="col-span-2 bg-[#f8fafc]/5 rounded-lg p-3 border border-white/5 flex flex-col justify-end gap-1 h-16 relative overflow-hidden">
                                                 <div class="flex items-end gap-1 w-full h-full">
-                                                    <div class="w-full bg-[#4318ff] rounded-t-sm h-[40%]"></div>
-                                                    <div class="w-full bg-[#05cd99] rounded-t-sm h-[80%]"></div>
-                                                    <div class="w-full bg-[#ffb547] rounded-t-sm h-[60%]"></div>
-                                                    <div class="w-full bg-[#ee5d50] rounded-t-sm h-[30%]"></div>
-                                                    <div class="w-full bg-[#0ea5e9] rounded-t-sm h-[90%]"></div>
+                                                    <div class="w-full bg-[#4318ff] rounded-t-sm h-[40%]"></div><div class="w-full bg-[#05cd99] rounded-t-sm h-[80%]"></div><div class="w-full bg-[#ffb547] rounded-t-sm h-[60%]"></div><div class="w-full bg-[#ee5d50] rounded-t-sm h-[30%]"></div><div class="w-full bg-[#0ea5e9] rounded-t-sm h-[90%]"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Info -->
                             <div>
                                 <div class="flex justify-between items-center mb-3">
-                                    <h4 class="font-title text-2xl text-white group-hover:text-[#3b82f6] transition-colors">Tesis Moodle: SecSalud Cali</h4>
-                                    <!-- Ícono de flecha normal para página interna -->
-                                    <svg class="w-6 h-6 text-slate-600 group-hover:text-[#3b82f6] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                    <h4 class="font-title text-2xl text-white group-hover:text-[#05cd99] transition-colors">Tesis Moodle: SecSalud Cali</h4>
+                                    <svg class="w-6 h-6 text-slate-600 group-hover:text-[#05cd99] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                                 </div>
-                                <p class="text-slate-400 text-sm leading-relaxed">Caso de estudio: Diseño de interfaz y experiencia de usuario (UI/UX) para la plataforma educativa virtual de la Secretaría de Salud Pública de Cali. Reestructuración visual, arquitectura de datos y dashboards analíticos.</p>
+                                <p class="text-slate-400 text-sm leading-relaxed">Diseño de interfaz y experiencia de usuario (UI/UX) para plataforma educativa virtual. Dashboards analíticos interactivos y escalables (CSS Variables).</p>
                             </div>
                         </div>
                     </a>
-
                 </div>
             </div>
 
@@ -312,11 +335,12 @@
             </h2>
             
             <a href="mailto:tu.correo@email.com" class="inline-block bg-white text-black font-semibold tracking-widest uppercase px-8 py-4 rounded-full hover:scale-105 hover:bg-blue-500 hover:text-white transition-all shadow-xl shadow-white/10 mb-20 text-sm">
-                tucorreo@email.com
+                daniel.zamorap@gmail.com
             </a>
 
             <div class="flex flex-col md:flex-row justify-between items-center text-slate-500 text-sm font-medium border-t border-white/5 pt-8">
-                <p>&copy; Daniel F. Zamora Pineda</p>
+                <p>&copy; 2026 Daniel F. Zamora Pineda</p>
+                <p class="mt-4 md:mt-0 font-title tracking-widest">PORTAFOLIO UI / UX</p>
             </div>
         </div>
     </footer>
